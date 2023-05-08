@@ -40,4 +40,3 @@ class Localization:
             return None
 
 
-# print(Localization('Warszawa').return_localization_data())
