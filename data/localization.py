@@ -13,7 +13,9 @@ class LocalizationData:
 class Localization:
     def __init__(self, city_name: str):
         self.city_name = city_name
-        self.base_url = f'https://www.olx.pl/api/v1/friendly-links/query-params/{self.city_name}'
+        self.base_url = (
+            f"https://www.olx.pl/api/v1/friendly-links/query-params/{self.city_name}"
+        )
 
     def get_localization_data(self):
         try:
@@ -29,14 +31,12 @@ class Localization:
         if data:
             try:
                 return LocalizationData(
-                    data['data']['region_id'],
-                    data['data']['city_id'],
-                    data['metadata']['names']['location']['city']['name']
+                    data["data"]["region_id"],
+                    data["data"]["city_id"],
+                    data["metadata"]["names"]["location"]["city"]["name"],
                 )
             except Exception as e:
                 print(e)
                 return None
         else:
             return None
-
-
