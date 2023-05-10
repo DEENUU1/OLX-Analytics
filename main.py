@@ -1,5 +1,5 @@
 from data import fetchData
-from data import localization
+from data import parser
 
 
 def main():
@@ -8,8 +8,9 @@ def main():
         area_min="25",
         price_min="600",
     )
-
-    print(fetchData.UrlBuilderHouse().fetch_data(url))
+    x = parser.ParserHouse()
+    print(url)
+    print(x.data_parse(fetchData.FetchData(url).fetch_data())[1])
 
 
 if __name__ == "__main__":

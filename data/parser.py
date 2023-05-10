@@ -1,5 +1,3 @@
-import fetchData
-import json
 from abc import abstractmethod, ABC
 from dataclasses import dataclass
 
@@ -15,9 +13,7 @@ class HouseData:
     url: str
     title: str
     created_time: str
-    price_per_meter: str
-    price: int
-    building_type: str
+    params: list
     city: str
     region: str
 
@@ -29,31 +25,23 @@ class ParserHouse(Parser):
             url = object['url']
             title = object['title']
             created_time = object['created_time']
-            price_per_meter = object['params'][0]['value']['key']
-            price = object['params'][2]['value']['value']
-            building_type = object['params'][6]['value']['key']
-            city = object['location']['city']['normalized_name']
-            region = object['location']['region']['normalized_name']
+            city = object['location']['city']['name']
+            region = object['location']['region']['name']
+
+            params = object.get('params', [])
+            params_values = []
+            for param in params:
+                param_value = param.get('value')
+                if param_value is not None:
+                    params_values.append(param_value)
 
             objects.append(
                 HouseData(
                     url=url,
                     title=title,
                     created_time=created_time,
-                    price_per_meter=price_per_meter,
-                    price=price,
-                    building_type=building_type,
+                    params=params_values,
                     city=city,
                     region=region
                 ))
         return objects
-
-
-url = fetchData.UrlBuilderHouse().build_url(
-    limit="40",
-    area_min="25",
-    price_min="600",
-)
-x = ParserHouse()
-print(x.data_parse(fetchData.FetchData(url).fetch_data()))
-# print(json.dumps(fetchData.FetchData(url).fetch_data(), indent=4))
