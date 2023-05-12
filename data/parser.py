@@ -1,15 +1,9 @@
-from abc import abstractmethod, ABC
 from dataclasses import dataclass
-
-
-class Parser(ABC):
-    @abstractmethod
-    def data_parse(self, data):
-        pass
+from typing import List
 
 
 @dataclass
-class HouseData:
+class ParseData:
     url: str
     title: str
     created_time: str
@@ -19,10 +13,13 @@ class HouseData:
     region: str
 
 
-class ParserHouse(Parser):
-    def data_parse(self, data: dict | None):
+class Parser:
+    def __init__(self, data):
+        self.data = data
+
+    def data_parser(self) -> List[ParseData]:
         objects = []
-        for object in data["data"]:
+        for object in self.data["data"]:
             url = object["url"]
             title = object["title"]
             created_time = object["created_time"]
@@ -35,13 +32,16 @@ class ParserHouse(Parser):
                 param_value = param.get("value")
                 if param_value is not None:
                     params_values.append(param_value)
+                else:
+                    params_values.append('')
 
             photos_url = []
             for photo in object['photos']:
                 photos_url.append(photo['link'])
+            if not photos_url:
+                photos_url.append('')
 
-            objects.append(
-                HouseData(
+            parsed_data = ParseData(
                     url=url,
                     title=title,
                     created_time=created_time,
@@ -49,6 +49,7 @@ class ParserHouse(Parser):
                     photos=photos_url,
                     city=city,
                     region=region,
-                )
             )
+            objects.append(parsed_data)
+
         return objects
