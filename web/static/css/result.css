@@ -1,0 +1,7 @@
+.table-image {
+    width: 200px;
+}
+
+.table-image:hover{
+    scale: 3;
+}

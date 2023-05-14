@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block title %}OLX Analitics | Results{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="/static/css/result.css" />
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<h1>OLX Analitics</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Title & Url</th>
+            <th scope="col">Created date</th>
+            <th scope="col">City & region</th>
+            <th scope="col">Params</th>
+            <th scope="col">Photos</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in data_list %}
+        <tr>
+            <th><img class="table-image" src="{{ data.photos[0] }}"></th>
+            <th><a href={{data.url}}>{{data.title}}</a></th>
+            <th>{{data.created_time}}</th>
+            <th>{{data.city}}, {{data.region}}</th>
+            <th>
+                <ul>
+                    {% for param in data.params %}
+                    <li>{{param}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+            <th>
+                <ul>
+                    {% for photo in data.photos %}
+                    <li>{{photo}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+</div>
+
+
+{% endblock %}
+
