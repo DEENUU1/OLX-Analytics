@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block title %}OLX Analitics | Results{% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container">
+<h1>OLX Analitics</h1>
+
+{% for data in data_list %}
+    <h3>{{data.title}}</h3>
+    {{data.url}} <br>
+    {{data.created_time}} <br>
+    {{data.city}} <br>
+    {{data.region}} <br>
+
+    {% for param in data.params %}
+        {{param}} <br>
+    {% endfor %}
+
+    {% for photo in data.photos %}
+        {{photo}} <br>
+    {% endfor %}
+
+{% endfor %}
+</div>
+
+{% endblock %}
+
