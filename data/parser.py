@@ -37,7 +37,7 @@ class Parser:
 
             photos_url = []
             for photo in object['photos']:
-                photos_url.append(photo['link'])
+                photos_url.append(photo['link'][:-19])
             if not photos_url:
                 photos_url.append('')
 
