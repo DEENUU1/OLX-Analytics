@@ -22,7 +22,7 @@ class Parser:
         for object in self.data["data"]:
             url = object["url"]
             title = object["title"]
-            created_time = object["created_time"]
+            created_time = object["last_refresh_time"]
             city = object["location"]["city"]["name"]
             region = object["location"]["region"]["name"]
             params = object.get("params", [])
