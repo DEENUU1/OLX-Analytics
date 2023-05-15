@@ -67,3 +67,17 @@ def return_cheapest_offer_per_meter(data_list: List[parser.ParseData]) -> parser
                 except ValueError:
                     pass
     return lowest_price_object
+
+
+def return_average_price_per_meter(data_list: List[parser.ParseData]) -> float:
+    total_price = 0
+    for data in data_list:
+        for param in data.params:
+            if param.key == "price_per_m":
+                price_str = param.value_key.replace(" ", "")
+                try:
+                    price = float(price_str[:-2])
+                    total_price += price
+                except ValueError:
+                    pass
+    return round(total_price / len(data_list), 2)
