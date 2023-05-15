@@ -20,4 +20,5 @@ def results_view():
     # print(operation.return_newest_offers(d))
     # print(url)
     # print(operation.return_cheapest_offer(d))
+    print(operation.return_average_price(d))
     return render_template('results.html', data_list=d)

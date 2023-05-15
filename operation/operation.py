@@ -19,7 +19,7 @@ def return_newest_offers(data_list: List[parser.ParseData]) -> List[parser.Parse
     return newest_offers
 
 
-def return_cheapest_offer(data_list):
+def return_cheapest_offer(data_list: List[parser.ParseData]) -> parser.ParseData:
     lowest_price_object = None
     lowest_price = float("inf")
 
@@ -35,3 +35,17 @@ def return_cheapest_offer(data_list):
                 except ValueError:
                     pass
     return lowest_price_object
+
+
+def return_average_price(data_list: List[parser.ParseData]) -> float:
+    total_price = 0
+    for data in data_list:
+        for param in data.params:
+            if param.name == "Cena":
+                price_str = param.value.replace(" ", "")
+                try:
+                    price = float(price_str[:-2])
+                    total_price += price
+                except ValueError:
+                    pass
+    return round(total_price / len(data_list), 2)
