@@ -10,8 +10,93 @@
 
 {% block content %}
 
+<h1>Average price {{average_price}}</h1>
+
+
 <div class="container">
-<h1>OLX Analitics</h1>
+<h1>Cheapest offer</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Title & Url</th>
+            <th scope="col">Created date</th>
+            <th scope="col">City & region</th>
+            <th scope="col">Params</th>
+            <th scope="col">Photos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th><img class="table-image" src="{{ cheapest_offer.photos[0] }}"></th>
+            <th><a href={{cheapest_offer.url}}>{{cheapest_offer.title}}</a></th>
+            <th>{{cheapest_offer.created_time}}</th>
+            <th>{{cheapest_offer.city}}, {{cheapest_offer.region}}</th>
+            <th>
+                <ul>
+                    {% for param in cheapest_offer.params %}
+                    <li>{{param.name}}: {{param.value}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+            <th>
+                <ul>
+                    {% for photo in cheapest_offer.photos %}
+                    <li>{{photo}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+
+<div class="container">
+<h1>Offers from today</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Title & Url</th>
+            <th scope="col">Created date</th>
+            <th scope="col">City & region</th>
+            <th scope="col">Params</th>
+            <th scope="col">Photos</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in newest_offers %}
+        <tr>
+            <th><img class="table-image" src="{{ data.photos[0] }}"></th>
+            <th><a href={{data.url}}>{{data.title}}</a></th>
+            <th>{{data.created_time}}</th>
+            <th>{{data.city}}, {{data.region}}</th>
+            <th>
+                <ul>
+                    {% for param in data.params %}
+                    <li>{{param.name}}: {{param.value}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+            <th>
+                <ul>
+                    {% for photo in data.photos %}
+                    <li>{{photo}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+</div>
+
+
+<div class="container">
+<h1>All offers</h1>
 
 <table class="table table-hover">
     <thead>

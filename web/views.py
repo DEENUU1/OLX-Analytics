@@ -15,10 +15,14 @@ def results_view():
     x = parser.Parser(fetch_data.FetchData(url).fetch_data())
     d = x.data_parser()
 
-    # for data in operation.return_newest_offers(d):
-    #     print(data)
-    # print(operation.return_newest_offers(d))
-    # print(url)
-    # print(operation.return_cheapest_offer(d))
-    print(operation.return_average_price(d))
-    return render_template('results.html', data_list=d)
+    s = operation.return_newest_offers(d)
+    z = operation.return_cheapest_offer(d)
+    y = operation.return_average_price(d)
+
+    return render_template('results.html',
+                           data_list=d,
+                           newest_offers=s,
+                           cheapest_offer=z,
+                           average_price=y,
+
+                           )
