@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from data import fetch_data, parser
 from operation import operation
-import datetime
 
 views = Blueprint('views', __name__)
 
@@ -16,8 +15,9 @@ def results_view():
     x = parser.Parser(fetch_data.FetchData(url).fetch_data())
     d = x.data_parser()
 
-    for data in operation.return_newest_offers(d):
-        print(data)
-    print(operation.return_newest_offers(d))
-    print(url)
+    # for data in operation.return_newest_offers(d):
+    #     print(data)
+    # print(operation.return_newest_offers(d))
+    # print(url)
+    # print(operation.return_cheapest_offer(d))
     return render_template('results.html', data_list=d)
