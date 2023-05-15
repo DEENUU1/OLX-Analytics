@@ -34,7 +34,7 @@
             <th>
                 <ul>
                     {% for param in data.params %}
-                    <li>{{param}}</li>
+                    <li>{{param.name}}: {{param.value}}</li>
                     {% endfor %}
                 </ul>
             </th>

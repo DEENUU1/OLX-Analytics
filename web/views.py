@@ -19,5 +19,5 @@ def results_view():
     for data in operation.return_newest_offers(d):
         print(data)
     print(operation.return_newest_offers(d))
-
+    print(url)
     return render_template('results.html', data_list=d)
