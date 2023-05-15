@@ -16,7 +16,7 @@ class FetchData:
 
 
 class UrlBuilder(ABC):
-    base_url = "https://www.olx.pl/api/v1/offers/?offset=0"
+    base_url = "https://www.olx.pl/api/v1/offers/?offset=0&sort_by=created_at%3Adesc"
 
     @abstractmethod
     def build_url(self, **kwargs: str) -> str:
@@ -47,6 +47,8 @@ class UrlBuilderApartment(UrlBuilder):
                     self.base_url += value.format(argument)
                 else:
                     self.base_url += value.format(argument)
+
+        self.base_url += f"&sort_by=created_at"
 
         return self.base_url
 

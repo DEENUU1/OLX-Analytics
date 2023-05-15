@@ -13,27 +13,38 @@ class ParseData:
     region: str
 
 
+@dataclass
+class ParamsData:
+    key: str
+    name: str
+    value: str
+    value_key: str
+
+
 class Parser:
     def __init__(self, data):
         self.data = data
+
+    def parse_params(self, params):
+        parsed_params = []
+        for param in params:
+            name = param.get("name", "")
+            key = param.get("key", "")
+            value = param.get("value", {}).get("label", "")
+            value_key = param.get("value", {}).get("key", "")
+            parsed_params.append(ParamsData(name=name, value=value, key=key, value_key=value_key))
+        return parsed_params
 
     def data_parser(self) -> List[ParseData]:
         objects = []
         for object in self.data["data"]:
             url = object["url"]
             title = object["title"]
-            created_time = object["created_time"]
+            created_time = object["last_refresh_time"]
             city = object["location"]["city"]["name"]
             region = object["location"]["region"]["name"]
             params = object.get("params", [])
-
-            params_values = []
-            for param in params:
-                param_value = param.get("value")
-                if param_value is not None:
-                    params_values.append(param_value)
-                else:
-                    params_values.append('')
+            parsed_params = self.parse_params(params)
 
             photos_url = []
             for photo in object['photos']:
@@ -45,7 +56,7 @@ class Parser:
                     url=url,
                     title=title,
                     created_time=created_time,
-                    params=params_values,
+                    params=parsed_params,
                     photos=photos_url,
                     city=city,
                     region=region,
