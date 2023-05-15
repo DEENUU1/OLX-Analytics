@@ -15,8 +15,10 @@ class ParseData:
 
 @dataclass
 class ParamsData:
+    key: str
     name: str
     value: str
+    value_key: str
 
 
 class Parser:
@@ -27,8 +29,10 @@ class Parser:
         parsed_params = []
         for param in params:
             name = param.get("name", "")
+            key = param.get("key", "")
             value = param.get("value", {}).get("label", "")
-            parsed_params.append(ParamsData(name=name, value=value))
+            value_key = param.get("value", {}).get("key", "")
+            parsed_params.append(ParamsData(name=name, value=value, key=key, value_key=value_key))
         return parsed_params
 
     def data_parser(self) -> List[ParseData]:

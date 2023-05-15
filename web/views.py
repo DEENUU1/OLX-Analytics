@@ -18,11 +18,12 @@ def results_view():
     s = operation.return_newest_offers(d)
     z = operation.return_cheapest_offer(d)
     y = operation.return_average_price(d)
-
+    g = operation.return_cheapest_offer_per_meter(d)
+    print(url)
     return render_template('results.html',
                            data_list=d,
                            newest_offers=s,
                            cheapest_offer=z,
                            average_price=y,
-
+                           cheapest_offer_per_meter=g,
                            )
