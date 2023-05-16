@@ -12,7 +12,6 @@ def results_view():
         area_min="25",
         price_min="600",
     )
-    print(url)
     x = parser.Parser(fetch_data.FetchData(url).fetch_data())
     d = x.data_parser()
 
@@ -24,6 +23,7 @@ def results_view():
     v = operation.return_most_expensive_offer(d)
     i = operation.return_most_expensive_offer_per_meter(d)
     u = operation.return_offer_largest_area_building(d)
+    l = operation.return_offer_largest_area_plot(d)
 
     print(url)
     return render_template(
@@ -37,4 +37,5 @@ def results_view():
         most_expensive_offer=v,
         most_expensive_offer_per_meter=i,
         largest_area_building=u,
+        largest_area_plot=l,
     )
