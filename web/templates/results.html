@@ -13,6 +13,122 @@
 <h1>Average price {{average_price}}</h1>
 <h1>Average price per meter {{average_price_per_meter}}</h1>
 
+<div class="container">
+<h1>The offer with the largest plot area</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Title & Url</th>
+            <th scope="col">Created date</th>
+            <th scope="col">City & region</th>
+            <th scope="col">Params</th>
+            <th scope="col">Photos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th><img class="table-image" src="{{ largest_area_plot.photos[0] }}"></th>
+            <th><a href={{largest_area_plot.url}}>{{largest_area_plot.title}}</a></th>
+            <th>{{largest_area_plot.created_time}}</th>
+            <th>{{largest_area_plot.city}}, {{largest_area_plot.region}}</th>
+            <th>
+                <ul>
+                    {% for param in largest_area_plot.params %}
+                    <li>{{param.name}}: {{param.value}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+            <th>
+                <ul>
+                    {% for photo in largest_area_plot.photos %}
+                    <li>{{photo}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="container">
+<h1>The most expensive offer per meter^2</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Title & Url</th>
+            <th scope="col">Created date</th>
+            <th scope="col">City & region</th>
+            <th scope="col">Params</th>
+            <th scope="col">Photos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th><img class="table-image" src="{{ most_expensive_offer_per_meter.photos[0] }}"></th>
+            <th><a href={{most_expensive_offer_per_meter.url}}>{{most_expensive_offer_per_meter.title}}</a></th>
+            <th>{{most_expensive_offer_per_meter.created_time}}</th>
+            <th>{{most_expensive_offer_per_meter.city}}, {{most_expensive_offer_per_meter.region}}</th>
+            <th>
+                <ul>
+                    {% for param in most_expensive_offer_per_meter.params %}
+                    <li>{{param.name}}: {{param.value}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+            <th>
+                <ul>
+                    {% for photo in most_expensive_offer_per_meter.photos %}
+                    <li>{{photo}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<div class="container">
+<h1>The most expensive offer per meter^2</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Title & Url</th>
+            <th scope="col">Created date</th>
+            <th scope="col">City & region</th>
+            <th scope="col">Params</th>
+            <th scope="col">Photos</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th><img class="table-image" src="{{ most_expensive_offer_per_meter.photos[0] }}"></th>
+            <th><a href={{most_expensive_offer_per_meter.url}}>{{most_expensive_offer_per_meter.title}}</a></th>
+            <th>{{most_expensive_offer_per_meter.created_time}}</th>
+            <th>{{most_expensive_offer_per_meter.city}}, {{most_expensive_offer_per_meter.region}}</th>
+            <th>
+                <ul>
+                    {% for param in most_expensive_offer_per_meter.params %}
+                    <li>{{param.name}}: {{param.value}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+            <th>
+                <ul>
+                    {% for photo in most_expensive_offer_per_meter.photos %}
+                    <li>{{photo}}</li>
+                    {% endfor %}
+                </ul>
+            </th>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 <div class="container">
 <h1>The most expensive offer</h1>
