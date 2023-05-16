@@ -7,7 +7,7 @@ views = Blueprint("views", __name__)
 
 @views.route("/", methods=["GET", "POST"])
 def results_view():
-    url = fetch_data.UrlBuilderHouse().build_url(
+    url = fetch_data.UrlBuilderApartment().build_url(
         limit="40",
         area_min="25",
         price_min="600",

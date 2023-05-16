@@ -48,8 +48,6 @@ class UrlBuilderApartment(UrlBuilder):
                 else:
                     self.base_url += value.format(argument)
 
-        self.base_url += f"&sort_by=created_at"
-
         return self.base_url
 
 
