@@ -2,10 +2,10 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from data import fetch_data, parser
 from operation import operation
 
-views = Blueprint('views', __name__)
+views = Blueprint("views", __name__)
 
 
-@views.route('/', methods=['GET', 'POST'])
+@views.route("/", methods=["GET", "POST"])
 def results_view():
     url = fetch_data.UrlBuilderHouse().build_url(
         limit="40",
@@ -22,11 +22,12 @@ def results_view():
     f = operation.return_average_price_per_meter(d)
 
     print(url)
-    return render_template('results.html',
-                           data_list=d,
-                           newest_offers=s,
-                           cheapest_offer=z,
-                           average_price=y,
-                           cheapest_offer_per_meter=g,
-                           average_price_per_meter=f,
-                           )
+    return render_template(
+        "results.html",
+        data_list=d,
+        newest_offers=s,
+        cheapest_offer=z,
+        average_price=y,
+        cheapest_offer_per_meter=g,
+        average_price_per_meter=f,
+    )

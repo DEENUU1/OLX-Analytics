@@ -51,7 +51,9 @@ def return_average_price(data_list: List[parser.ParseData]) -> float:
     return round(total_price / len(data_list), 2)
 
 
-def return_cheapest_offer_per_meter(data_list: List[parser.ParseData]) -> parser.ParseData:
+def return_cheapest_offer_per_meter(
+    data_list: List[parser.ParseData],
+) -> parser.ParseData:
     lowest_price_object = None
     lowest_price = float("inf")
 

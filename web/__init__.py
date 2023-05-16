@@ -13,7 +13,7 @@ def create_app():
     csrf.init_app(app)
 
     from .views import views
+
     app.register_blueprint(views)
 
     return app
-

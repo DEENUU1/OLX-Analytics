@@ -32,7 +32,9 @@ class Parser:
             key = param.get("key", "")
             value = param.get("value", {}).get("label", "")
             value_key = param.get("value", {}).get("key", "")
-            parsed_params.append(ParamsData(name=name, value=value, key=key, value_key=value_key))
+            parsed_params.append(
+                ParamsData(name=name, value=value, key=key, value_key=value_key)
+            )
         return parsed_params
 
     def data_parser(self) -> List[ParseData]:
@@ -47,19 +49,19 @@ class Parser:
             parsed_params = self.parse_params(params)
 
             photos_url = []
-            for photo in object['photos']:
-                photos_url.append(photo['link'][:-19])
+            for photo in object["photos"]:
+                photos_url.append(photo["link"][:-19])
             if not photos_url:
-                photos_url.append('')
+                photos_url.append("")
 
             parsed_data = ParseData(
-                    url=url,
-                    title=title,
-                    created_time=created_time,
-                    params=parsed_params,
-                    photos=photos_url,
-                    city=city,
-                    region=region,
+                url=url,
+                title=title,
+                created_time=created_time,
+                params=parsed_params,
+                photos=photos_url,
+                city=city,
+                region=region,
             )
             objects.append(parsed_data)
 
