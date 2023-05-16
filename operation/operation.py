@@ -71,7 +71,9 @@ def return_cheapest_offer_per_meter(
     return lowest_price_object
 
 
-def return_average_price_per_meter(data_list: List[parser.ParseData]) -> float:
+def return_average_price_per_meter(
+        data_list: List[parser.ParseData]
+) -> float:
     total_price = 0
     for data in data_list:
         for param in data.params:
@@ -83,3 +85,23 @@ def return_average_price_per_meter(data_list: List[parser.ParseData]) -> float:
                 except ValueError:
                     pass
     return round(total_price / len(data_list), 2)
+
+
+def return_most_expensive_offer(
+        data_list: List[parser.ParseData]
+) -> parser.ParseData:
+    highest_price_object = None
+    highest_price = 0
+
+    for data in data_list:
+        for param in data.params:
+            if param.name == "Cena":
+                price_str = param.value.replace(" ", "")
+                try:
+                    price = float(price_str[:-2])
+                    if price > highest_price:
+                        highest_price = price
+                        highest_price_object = data
+                except ValueError:
+                    pass
+    return highest_price_object
