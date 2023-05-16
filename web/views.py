@@ -20,6 +20,7 @@ def results_view():
     y = operation.return_average_price(d)
     g = operation.return_cheapest_offer_per_meter(d)
     f = operation.return_average_price_per_meter(d)
+    v = operation.return_most_expensive_offer(d)
 
     print(url)
     return render_template(
@@ -30,4 +31,5 @@ def results_view():
         average_price=y,
         cheapest_offer_per_meter=g,
         average_price_per_meter=f,
+        most_expensive_offer=v,
     )
