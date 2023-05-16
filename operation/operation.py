@@ -105,3 +105,43 @@ def return_most_expensive_offer(
                 except ValueError:
                     pass
     return highest_price_object
+
+
+def return_most_expensive_offer_per_meter(
+        data_list: List[parser.ParseData]
+) -> parser.ParseData:
+    highest_price_object = None
+    highest_price = 0
+
+    for data in data_list:
+        for param in data.params:
+            if param.key == "price_per_m":
+                price_str = param.value_key.replace(" ", "")
+                try:
+                    price = float(price_str[:-2])
+                    if price > highest_price:
+                        highest_price = price
+                        highest_price_object = data
+                except ValueError:
+                    pass
+    return highest_price_object
+
+
+def return_offer_largest_area_building(
+        data_list: List[parser.ParseData]
+) -> parser.ParseData:
+    highest_area_object = None
+    highest_area = 0
+
+    for data in data_list:
+        for param in data.params:
+            if param.key == "m":
+                area_str = param.value_key.replace(" ", "")
+                try:
+                    area = float(area_str[:-2])
+                    if area > highest_area:
+                        highest_area = area
+                        highest_area_object = data
+                except ValueError:
+                    pass
+    return highest_area_object
