@@ -21,6 +21,9 @@ def results_view():
     g = operation.return_cheapest_offer_per_meter(d)
     f = operation.return_average_price_per_meter(d)
     v = operation.return_most_expensive_offer(d)
+    i = operation.return_most_expensive_offer_per_meter(d)
+    u = operation.return_offer_largest_area_building(d)
+    l = operation.return_offer_largest_area_plot(d)
 
     print(url)
     return render_template(
@@ -32,4 +35,7 @@ def results_view():
         cheapest_offer_per_meter=g,
         average_price_per_meter=f,
         most_expensive_offer=v,
+        most_expensive_offer_per_meter=i,
+        largest_area_building=u,
+        largest_area_plot=l,
     )
