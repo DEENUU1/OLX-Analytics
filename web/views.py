@@ -47,18 +47,6 @@ def search_apartment_view():
             area_min = form.area_min.data
             area_max = form.area_max.data
 
-            print(
-                category,
-                price_min,
-                price_max,
-                region,
-                city,
-                build_type,
-                furniture,
-                rooms,
-                area_min,
-                area_max,
-            )
             session.pop("category_data")
 
     return render_template("search_apartment.html", form=form)
