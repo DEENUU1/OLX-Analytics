@@ -16,7 +16,9 @@ class FetchData:
 
 
 class UrlBuilder(ABC):
-    base_url = "https://www.olx.pl/api/v1/offers/?offset=0&sort_by=created_at%3Adesc"
+    base_url = (
+        "https://www.olx.pl/api/v1/offers/?offset=0&sort_by=created_at%3Adesc&limit=40"
+    )
 
     @abstractmethod
     def build_url(self, **kwargs: str) -> str:
@@ -26,7 +28,6 @@ class UrlBuilder(ABC):
 class UrlBuilderApartment(UrlBuilder):
     def build_url(self, **kwargs) -> str:
         parameters = {
-            "limit": "&limit={}",
             "category_id": "&category_id={}",
             "build_type": "&filter_enum_builttype%5B0%5D={}",
             "floor_select": "&filter_enum_floor_select%5B0%5D=floor_{}",
@@ -54,7 +55,6 @@ class UrlBuilderApartment(UrlBuilder):
 class UrlBuilderHouse(UrlBuilder):
     def build_url(self, **kwargs) -> str:
         parameters = {
-            "limit": "&limit={}",
             "build_type": "&filter_enum_builttype%5B0%5D={}",
             "market_type": "&filter_enum_market[0]=primary={}",
             "furniture": "&filter_enum_furniture%5B0%5D={}",
