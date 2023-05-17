@@ -78,3 +78,5 @@ class SearchHouseForm(FlaskForm):
     furniture = SelectField("Furniture", choices=FURNITURE)
     area_min = SelectField("Area min", choices=AREA_VALUES)
     area_max = SelectField("Area max", choices=AREA_VALUES)
+    area_plot_min = SelectField("Area plo mint", choices=AREA_PLOT_VALUES)
+    area_plot_max = SelectField("Area plot max", choices=AREA_PLOT_VALUES)
