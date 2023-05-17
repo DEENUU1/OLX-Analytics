@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}OLX Analitics | Search Apartment{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="/static/css/result.css" />
+{% endblock %}
+
+
+{% block content %}
+
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+  {{form.build_type}}
+  {{form.furniture}}
+  {{form.rooms}}
+  {{form.area_min}}
+  {{form.area_max}}
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+
+{% endblock %}

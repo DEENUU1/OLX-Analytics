@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}OLX Analitics | Home Page{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="/static/css/result.css" />
+{% endblock %}
+
+
+{% block content %}
+
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+  {{form.category}}
+  {{form.price_min}}
+  {{form.price_max}}
+  {{form.region}}
+  {{form.city}}
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+
+{% endblock %}

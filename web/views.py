@@ -1,11 +1,70 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, session, request, redirect, url_for, flash
 from data import fetch_data, parser
 from operation import operation
+from .forms import SearchByCategories, SearchApartmentForm
+
 
 views = Blueprint("views", __name__)
 
 
 @views.route("/", methods=["GET", "POST"])
+def home_view():
+    form = SearchByCategories()
+
+    if form.validate_on_submit():
+        category = form.category.data
+        if category == "1307":
+            session["category_data"] = {
+                "category": form.category.data,
+                "price_min": form.price_min.data,
+                "price_max": form.price_max.data,
+                "region": form.region.data,
+                "city": form.city.data,
+            }
+            return redirect(url_for("views.search_apartment_view"))
+        elif category == "1309":
+            pass
+
+    return render_template("home.html", form=form)
+
+
+@views.route("/search_apartment", methods=["GET", "POST"])
+def search_apartment_view():
+    form = SearchApartmentForm()
+
+    if form.validate_on_submit():
+        category_data = session.get("category_data")
+        if category_data:
+            category = category_data["category"]
+            price_min = category_data["price_min"]
+            price_max = category_data["price_max"]
+            region = category_data["region"]
+            city = category_data["city"]
+
+            build_type = form.build_type.data
+            furniture = form.furniture.data
+            rooms = form.rooms.data
+            area_min = form.area_min.data
+            area_max = form.area_max.data
+
+            print(
+                category,
+                price_min,
+                price_max,
+                region,
+                city,
+                build_type,
+                furniture,
+                rooms,
+                area_min,
+                area_max,
+            )
+            session.pop("category_data")
+
+    return render_template("search_apartment.html", form=form)
+
+
+@views.route("/results", methods=["GET", "POST"])
 def results_view():
     url = fetch_data.UrlBuilderApartment().build_url(
         limit="40",
