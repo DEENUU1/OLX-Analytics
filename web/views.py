@@ -35,19 +35,17 @@ def search_apartment_view():
     if form.validate_on_submit():
         category_data = session.get("category_data")
         if category_data:
-            category = category_data["category"]
-            price_min = category_data["price_min"]
-            price_max = category_data["price_max"]
-            region = category_data["region"]
-            city = category_data["city"]
+            category_data.update(
+                {
+                    "build_type": form.build_type.data,
+                    "rooms": form.rooms.data,
+                    "furniture": form.furniture.data,
+                    "area_min": form.area_min.data,
+                    "area_max": form.area_max.data,
+                }
+            )
 
-            build_type = form.build_type.data
-            rooms = form.rooms.data
-            furniture = form.furniture.data
-            area_min = form.area_min.data
-            area_max = form.area_max.data
-
-            session.pop("category_data")
+            # session.pop("category_data")
 
     return render_template("search_apartment.html", form=form)
 
@@ -59,20 +57,18 @@ def search_house_view():
     if form.validate_on_submit():
         category_data = session.get("category_data")
         if category_data:
-            category = category_data["category"]
-            price_min = category_data["price_min"]
-            price_max = category_data["price_max"]
-            region = category_data["region"]
-            city = category_data["city"]
+            category_data.update(
+                {
+                    "build_type": form.build_type.data,
+                    "furniture": form.furniture.data,
+                    "area_min": form.area_min.data,
+                    "area_max": form.area_max.data,
+                    "area_plot_min": form.area_plot_min.data,
+                    "area_plot_max": form.area_plot_max.data,
+                }
+            )
 
-            build_type = form.build_type.data
-            furniture = form.furniture.data
-            area_min = form.area_min.data
-            area_max = form.area_max.data
-            area_plot_min = form.area_plot_min.data
-            area_plot_max = form.area_plot_max.data
-
-            session.pop("category_data")
+            # session.pop("category_data")
 
     return render_template("search_house.html", form=form)
 
