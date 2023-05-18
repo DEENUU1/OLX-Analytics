@@ -44,7 +44,10 @@ def search_apartment_view():
                     "area_max": form.area_max.data,
                 }
             )
-
+            print(category_data)
+            print(category_data["build_type"])
+            print(category_data["rooms"])
+            return redirect(url_for("views.results_view"))
             # session.pop("category_data")
 
     return render_template("search_apartment.html", form=form)
@@ -67,7 +70,7 @@ def search_house_view():
                     "area_plot_max": form.area_plot_max.data,
                 }
             )
-
+            return redirect(url_for("views.results_view"))
             # session.pop("category_data")
 
     return render_template("search_house.html", form=form)
@@ -75,35 +78,83 @@ def search_house_view():
 
 @views.route("/results", methods=["GET", "POST"])
 def results_view():
-    url = fetch_data.UrlBuilderApartment().build_url(
-        limit="40",
-        area_min="25",
-        price_min="600",
-    )
-    x = parser.Parser(fetch_data.FetchData(url).fetch_data())
-    d = x.data_parser()
+    category_data = session.get("category_data")
 
-    s = operation.return_newest_offers(d)
-    z = operation.return_cheapest_offer(d)
-    y = operation.return_average_price(d)
-    g = operation.return_cheapest_offer_per_meter(d)
-    f = operation.return_average_price_per_meter(d)
-    v = operation.return_most_expensive_offer(d)
-    i = operation.return_most_expensive_offer_per_meter(d)
-    u = operation.return_offer_largest_area_building(d)
-    l = operation.return_offer_largest_area_plot(d)
+    if category_data:
+        category = category_data["category"]
+        if category == "1307":
+            url = fetch_data.UrlBuilderApartment().build_url(
+                limit="40",
+                # build_type=category_data["build_type"],
+                # rooms=category_data["rooms"],
+                # furniture=category_data["furniture"],
+                # area_min=category_data["area_min"],
+                # area_max=category_data["area_max"],
+            )
+            print(url)
+            print(category_data)
+            print(category_data["category"])
+            x = parser.Parser(fetch_data.FetchData(url).fetch_data())
+            d = x.data_parser()
+            print(d)
+            s = operation.return_newest_offers(d)
+            z = operation.return_cheapest_offer(d)
+            y = operation.return_average_price(d)
+            g = operation.return_cheapest_offer_per_meter(d)
+            f = operation.return_average_price_per_meter(d)
+            v = operation.return_most_expensive_offer(d)
+            i = operation.return_most_expensive_offer_per_meter(d)
+            u = operation.return_offer_largest_area_building(d)
+            l = operation.return_offer_largest_area_plot(d)
 
-    print(url)
-    return render_template(
-        "results.html",
-        data_list=d,
-        newest_offers=s,
-        cheapest_offer=z,
-        average_price=y,
-        cheapest_offer_per_meter=g,
-        average_price_per_meter=f,
-        most_expensive_offer=v,
-        most_expensive_offer_per_meter=i,
-        largest_area_building=u,
-        largest_area_plot=l,
-    )
+            return render_template(
+                "results.html",
+                data_list=d,
+                newest_offers=s,
+                cheapest_offer=z,
+                average_price=y,
+                cheapest_offer_per_meter=g,
+                average_price_per_meter=f,
+                most_expensive_offer=v,
+                most_expensive_offer_per_meter=i,
+                largest_area_building=u,
+                largest_area_plot=l,
+            )
+        elif category == "1309":
+            url = fetch_data.UrlBuilderApartment().build_url(
+                limit="40",
+                # build_type=category_data["build_type"],
+                # rooms=category_data["rooms"],
+                # furniture=category_data["furniture"],
+                # area_min=category_data["area_min"],
+                # area_max=category_data["area_max"],
+            )
+            print(url)
+            print(category_data)
+            print(category_data["category"])
+            x = parser.Parser(fetch_data.FetchData(url).fetch_data())
+            d = x.data_parser()
+            print(d)
+            s = operation.return_newest_offers(d)
+            z = operation.return_cheapest_offer(d)
+            y = operation.return_average_price(d)
+            g = operation.return_cheapest_offer_per_meter(d)
+            f = operation.return_average_price_per_meter(d)
+            v = operation.return_most_expensive_offer(d)
+            i = operation.return_most_expensive_offer_per_meter(d)
+            u = operation.return_offer_largest_area_building(d)
+            l = operation.return_offer_largest_area_plot(d)
+
+            return render_template(
+                "results.html",
+                data_list=d,
+                newest_offers=s,
+                cheapest_offer=z,
+                average_price=y,
+                cheapest_offer_per_meter=g,
+                average_price_per_meter=f,
+                most_expensive_offer=v,
+                most_expensive_offer_per_meter=i,
+                largest_area_building=u,
+                largest_area_plot=l,
+            )

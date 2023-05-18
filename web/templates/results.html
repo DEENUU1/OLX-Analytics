@@ -16,6 +16,7 @@
 <div class="container">
 <h1>The offer with the largest plot area</h1>
 
+{% if largest_area_plot %}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -51,7 +52,9 @@
     </tbody>
 </table>
 </div>
+{% endif %}
 
+{% if most_expensive_offer_per_meter %}
 <div class="container">
 <h1>The most expensive offer per meter^2</h1>
 
@@ -90,7 +93,10 @@
     </tbody>
 </table>
 </div>
+{% endif %}
 
+
+{% if most_expensive_offer_per_meter %}
 <div class="container">
 <h1>The most expensive offer per meter^2</h1>
 
@@ -129,7 +135,10 @@
     </tbody>
 </table>
 </div>
+{% endif %}
 
+
+{% if most_expensive_offer %}
 <div class="container">
 <h1>The most expensive offer</h1>
 
@@ -168,8 +177,10 @@
     </tbody>
 </table>
 </div>
+{% endif %}
 
 
+{% if cheapest_offer_per_meter %}
 <div class="container">
 <h1>Cheapest offer per meter^2</h1>
 
@@ -208,7 +219,11 @@
     </tbody>
 </table>
 </div>
+{% endif %}
 
+
+
+{% if cheapest_offer %}
 <div class="container">
 <h1>Cheapest offer</h1>
 
@@ -247,7 +262,7 @@
     </tbody>
 </table>
 </div>
-
+{% endif %}
 
 <div class="container">
 <h1>Offers from today</h1>
