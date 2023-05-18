@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
-from data import fetch_data, parser
+from data import fetch_data, parser, localization
 from operation import operation
 from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm
-import json
 
 
 views = Blueprint("views", __name__)
@@ -78,6 +77,7 @@ def results_view():
 
         if category == "1307":
             apartment_data = session.get("apartment_data")
+            localization_data = localization.Localization(category_data["city"])
             url = fetch_data.UrlBuilderApartment().build_url(
                 limit="40",
                 build_type=apartment_data["build_type"],
@@ -85,10 +85,12 @@ def results_view():
                 niture=apartment_data["furniture"],
                 area_min=apartment_data["area_min"],
                 area_max=apartment_data["area_max"],
+                city_id=localization_data.return_localization_data().city_id,
+                region_id=localization_data.return_localization_data().region_id,
             )
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
-            print(d[:3])
+            print(url)
             s = operation.return_newest_offers(d)
             y = operation.return_average_price(d)
             f = operation.return_average_price_per_meter(d)
@@ -111,11 +113,14 @@ def results_view():
 
         elif category == "1309":
             house_data = session.get("house_data")
+            localization_data = localization.Localization(category_data["city"])
             url = fetch_data.UrlBuilderApartment().build_url(
                 limit="40",
                 build_type=house_data["build_type"],
                 area_min=house_data["area_min"],
                 area_max=house_data["area_max"],
+                city_id=localization_data.return_localization_data().city_id,
+                region_id=localization_data.return_localization_data().region_id,
             )
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
