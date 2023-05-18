@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, session, request, redirect, url_fo
 from data import fetch_data, parser
 from operation import operation
 from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm
+import json
 
 
 views = Blueprint("views", __name__)
@@ -87,6 +88,7 @@ def results_view():
             )
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
+            print(url)
             s = operation.return_newest_offers(d)
             y = operation.return_average_price(d)
             f = operation.return_average_price_per_meter(d)
