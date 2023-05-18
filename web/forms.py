@@ -14,11 +14,11 @@ class SearchByCategories(FlaskForm):
         ("300000", "300000"),
     ]
 
-    category = SelectField("Category", choices=CATEGORIES)
-    price_min = SelectField("Price min", choices=PRICE_VALUES)
-    price_max = SelectField("Price max", choices=PRICE_VALUES)
-    region = StringField("Region")
-    city = StringField("City")
+    category = SelectField("Category", choices=CATEGORIES, default="")
+    price_min = SelectField("Price min", choices=PRICE_VALUES, default="")
+    price_max = SelectField("Price max", choices=PRICE_VALUES, default="")
+    region = StringField("Region", default="")
+    city = StringField("City", default="")
 
 
 class SearchApartmentForm(FlaskForm):
@@ -48,11 +48,11 @@ class SearchApartmentForm(FlaskForm):
         ("150", "150"),
     ]
 
-    build_type = SelectField("Build type", choices=BUILD_TYPE)
-    furniture = SelectField("Furniture", choices=FURNITURE)
-    rooms = SelectField("Rooms", choices=ROOMS)
-    area_min = SelectField("Area min", choices=AREA_VALUES)
-    area_max = SelectField("Area max", choices=AREA_VALUES)
+    build_type = SelectField("Build type", choices=BUILD_TYPE, default="")
+    furniture = SelectField("Furniture", choices=FURNITURE, default="")
+    rooms = SelectField("Rooms", choices=ROOMS, default="")
+    area_min = SelectField("Area min", choices=AREA_VALUES, default="")
+    area_max = SelectField("Area max", choices=AREA_VALUES, default="")
 
 
 class SearchHouseForm(FlaskForm):
@@ -64,7 +64,6 @@ class SearchHouseForm(FlaskForm):
         ("letniskowy", "Letniskowy"),
         ("pozostałe", "Pozostałe"),
     ]
-    FURNITURE = [("wszystkie", "Wszystkie"), ("tak", "Tak"), ("nie", "Nie")]
     AREA_VALUES = [
         ("35", "35"),
         ("60", "60"),
@@ -85,7 +84,6 @@ class SearchHouseForm(FlaskForm):
         ("3000", "3000"),
     ]
     build_type = SelectField("Category", choices=BUILD_TYPE)
-    furniture = SelectField("Furniture", choices=FURNITURE)
     area_min = SelectField("Area min", choices=AREA_VALUES)
     area_max = SelectField("Area max", choices=AREA_VALUES)
     area_plot_min = SelectField("Area plo mint", choices=AREA_PLOT_VALUES)

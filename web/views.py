@@ -35,18 +35,14 @@ def search_apartment_view():
     if form.validate_on_submit():
         category_data = session.get("category_data")
         if category_data:
-            category_data.update(
-                {
-                    "build_type": form.build_type.data,
-                    "rooms": form.rooms.data,
-                    "furniture": form.furniture.data,
-                    "area_min": form.area_min.data,
-                    "area_max": form.area_max.data,
-                }
-            )
-            print(category_data)
-            print(category_data["build_type"])
-            print(category_data["rooms"])
+            session["apartment_data"] = {
+                "build_type": form.build_type.data,
+                "rooms": form.rooms.data,
+                "furniture": form.furniture.data,
+                "area_min": form.area_min.data,
+                "area_max": form.area_max.data,
+            }
+
             return redirect(url_for("views.results_view"))
 
     return render_template("search_apartment.html", form=form)
@@ -59,16 +55,14 @@ def search_house_view():
     if form.validate_on_submit():
         category_data = session.get("category_data")
         if category_data:
-            category_data.update(
-                {
-                    "build_type": form.build_type.data,
-                    "furniture": form.furniture.data,
-                    "area_min": form.area_min.data,
-                    "area_max": form.area_max.data,
-                    "area_plot_min": form.area_plot_min.data,
-                    "area_plot_max": form.area_plot_max.data,
-                }
-            )
+            session["house_data"] = {
+                "build_type": form.build_type.data,
+                "area_min": form.area_min.data,
+                "area_max": form.area_max.data,
+                "area_plot_min": form.area_plot_min.data,
+                "area_plot_max": form.area_plot_max.data,
+            }
+
             return redirect(url_for("views.results_view"))
 
     return render_template("search_house.html", form=form)
@@ -80,15 +74,18 @@ def results_view():
 
     if category_data:
         category = category_data["category"]
+
         if category == "1307":
+            apartment_data = session.get("apartment_data")
             url = fetch_data.UrlBuilderApartment().build_url(
                 limit="40",
-                # build_type=category_data["build_type"],
-                # furrooms=category_data["rooms"],
-                # niture=category_data["furniture"],
-                # area_min=category_data["area_min"],
-                # area_max=category_data["area_max"],
+                build_type=apartment_data["build_type"],
+                furrooms=apartment_data["rooms"],
+                niture=apartment_data["furniture"],
+                area_min=apartment_data["area_min"],
+                area_max=apartment_data["area_max"],
             )
+
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
             s = operation.return_newest_offers(d)
@@ -114,17 +111,19 @@ def results_view():
                 largest_area_building=u,
                 largest_area_plot=l,
             )
+
         elif category == "1309":
+            house_data = session.get("house_data")
             url = fetch_data.UrlBuilderApartment().build_url(
                 limit="40",
-                # build_type=category_data["build_type"],
-                # rooms=category_data["rooms"],
-                # furniture=category_data["furniture"],
-                # area_min=category_data["area_min"],
-                # area_max=category_data["area_max"],
+                build_type=house_data["build_type"],
+                area_min=house_data["area_min"],
+                area_max=house_data["area_max"],
             )
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
+            print(url)
+            print(d)
             s = operation.return_newest_offers(d)
             z = operation.return_cheapest_offer(d)
             y = operation.return_average_price(d)
