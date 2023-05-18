@@ -14,12 +14,4 @@ repos:
   hooks:
     - id: black
       args: [--safe]
-
-- repo: local
-  hooks:
-    - id: skip-requirements-txt
-      name: Skip requirements.txt
-      entry: echo "Skipping requirements.txt"
-      language: system
-      pass_filenames: false
-      files: ^requirements\.txt$
+      files: '\.py$'
