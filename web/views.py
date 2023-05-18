@@ -48,7 +48,6 @@ def search_apartment_view():
             print(category_data["build_type"])
             print(category_data["rooms"])
             return redirect(url_for("views.results_view"))
-            # session.pop("category_data")
 
     return render_template("search_apartment.html", form=form)
 
@@ -71,7 +70,6 @@ def search_house_view():
                 }
             )
             return redirect(url_for("views.results_view"))
-            # session.pop("category_data")
 
     return render_template("search_house.html", form=form)
 
@@ -86,17 +84,13 @@ def results_view():
             url = fetch_data.UrlBuilderApartment().build_url(
                 limit="40",
                 # build_type=category_data["build_type"],
-                # rooms=category_data["rooms"],
-                # furniture=category_data["furniture"],
+                # furrooms=category_data["rooms"],
+                # niture=category_data["furniture"],
                 # area_min=category_data["area_min"],
                 # area_max=category_data["area_max"],
             )
-            print(url)
-            print(category_data)
-            print(category_data["category"])
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
-            print(d)
             s = operation.return_newest_offers(d)
             z = operation.return_cheapest_offer(d)
             y = operation.return_average_price(d)
@@ -129,12 +123,8 @@ def results_view():
                 # area_min=category_data["area_min"],
                 # area_max=category_data["area_max"],
             )
-            print(url)
-            print(category_data)
-            print(category_data["category"])
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
-            print(d)
             s = operation.return_newest_offers(d)
             z = operation.return_cheapest_offer(d)
             y = operation.return_average_price(d)

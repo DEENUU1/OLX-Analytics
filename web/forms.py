@@ -4,9 +4,19 @@ from wtforms import StringField, SubmitField, SelectField
 
 class SearchByCategories(FlaskForm):
     CATEGORIES = [("1307", "Apartments"), ("1309", "Houses")]
+    PRICE_VALUES = [
+        ("1000", "1000"),
+        ("2000", "2000"),
+        ("3000", "3000"),
+        ("100000", "100000"),
+        ("150000", "150000"),
+        ("200000", "200000"),
+        ("300000", "300000"),
+    ]
+
     category = SelectField("Category", choices=CATEGORIES)
-    price_min = StringField("Price min")
-    price_max = StringField("Price max")
+    price_min = SelectField("Price min", choices=PRICE_VALUES)
+    price_max = SelectField("Price max", choices=PRICE_VALUES)
     region = StringField("Region")
     city = StringField("City")
 
