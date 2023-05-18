@@ -30,7 +30,7 @@ class UrlBuilderApartment(UrlBuilder):
         parameters = {
             "category_id": "&category_id={}",
             "build_type": "&filter_enum_builttype%5B0%5D={}",
-            "floor_select": "&filter_enum_floor_select%5B0%5D=floor_{}",
+            # "floor_select": "&filter_enum_floor_select%5B0%5D=floor_{}",
             "furniture": "&filter_enum_furniture%5B0%5D={}",
             "rooms": "&filter_enum_rooms%5B0%5D={}",
             "area_min": "&filter_float_m%3Afrom={}",
@@ -44,10 +44,9 @@ class UrlBuilderApartment(UrlBuilder):
         for key, value in parameters.items():
             argument = kwargs.get(key)
             if argument:
-                if key == "floor_select":
-                    self.base_url += value.format(argument)
-                else:
-                    self.base_url += value.format(argument)
+                self.base_url += value.format(argument)
+
+        self.base_url += f"&category_id=1307"
 
         return self.base_url
 
@@ -56,15 +55,14 @@ class UrlBuilderHouse(UrlBuilder):
     def build_url(self, **kwargs) -> str:
         parameters = {
             "build_type": "&filter_enum_builttype%5B0%5D={}",
-            "market_type": "&filter_enum_market[0]=primary={}",
             "furniture": "&filter_enum_furniture%5B0%5D={}",
-            "floor_count": "&filter_enum_floor%5B0%5D={}",
+            # "floor_count": "&filter_enum_floor%5B0%5D={}",
             "area_min": "&filter_float_area%3Afrom={}",
             "area_max": "&filter_float_area%3Ato={}",
             "plot_area_min": "&filter_float_m%3Ato={}",
             "plot_area_max": "&filter_float_price%3Afrom={}",
-            "price_per_m_min": "&filter_float_price_per_m%3Afrom={}",
-            "price_per_m_max": "&filter_float_price_per_m%3Ato={}",
+            # "price_per_m_min": "&filter_float_price_per_m%3Afrom={}",
+            # "price_per_m_max": "&filter_float_price_per_m%3Ato={}",
             "price_min": "&filter_float_price%3Afrom={}",
             "price_max": "&filter_float_price%3Ato={}",
             "region_id": "&region_id={}",
@@ -76,6 +74,6 @@ class UrlBuilderHouse(UrlBuilder):
             if argument:
                 self.base_url += value.format(argument)
 
-        self.base_url += f"&category_id=3"
+        self.base_url += f"&category_id=1309"
 
         return self.base_url
