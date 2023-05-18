@@ -8,6 +8,7 @@ repos:
     - id: check-added-large-files
     - id: debug-statements
       language_version: python3
+      exclude: requirements.txt
 - repo: https://github.com/psf/black
   rev: 22.3.0
   hooks:
