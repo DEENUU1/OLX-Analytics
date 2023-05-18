@@ -55,7 +55,6 @@ class UrlBuilderHouse(UrlBuilder):
     def build_url(self, **kwargs) -> str:
         parameters = {
             "build_type": "&filter_enum_builttype%5B0%5D={}",
-            "furniture": "&filter_enum_furniture%5B0%5D={}",
             # "floor_count": "&filter_enum_floor%5B0%5D={}",
             "area_min": "&filter_float_area%3Afrom={}",
             "area_max": "&filter_float_area%3Ato={}",
