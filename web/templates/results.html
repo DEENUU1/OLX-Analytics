@@ -16,6 +16,7 @@
 <div class="container">
 <h1>The offer with the largest plot area</h1>
 
+{% if largest_area_plot %}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -51,10 +52,12 @@
     </tbody>
 </table>
 </div>
+{% endif %}
+
 
 <div class="container">
 <h1>The most expensive offer per meter^2</h1>
-
+{% if most_expensive_offer_per_meter %}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -90,10 +93,13 @@
     </tbody>
 </table>
 </div>
+{% endif %}
+
+
 
 <div class="container">
 <h1>The most expensive offer per meter^2</h1>
-
+{% if most_expensive_offer_per_meter %}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -129,10 +135,13 @@
     </tbody>
 </table>
 </div>
+{% endif %}
+
+
 
 <div class="container">
 <h1>The most expensive offer</h1>
-
+{% if most_expensive_offer %}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -168,85 +177,10 @@
     </tbody>
 </table>
 </div>
+{% endif %}
 
 
-<div class="container">
-<h1>Cheapest offer per meter^2</h1>
 
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Title & Url</th>
-            <th scope="col">Created date</th>
-            <th scope="col">City & region</th>
-            <th scope="col">Params</th>
-            <th scope="col">Photos</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th><img class="table-image" src="{{ cheapest_offer_per_meter.photos[0] }}"></th>
-            <th><a href={{cheapest_offer_per_meter.url}}>{{cheapest_offer_per_meter.title}}</a></th>
-            <th>{{cheapest_offer_per_meter.created_time}}</th>
-            <th>{{cheapest_offer_per_meter.city}}, {{cheapest_offer_per_meter.region}}</th>
-            <th>
-                <ul>
-                    {% for param in cheapest_offer_per_meter.params %}
-                    <li>{{param.name}}: {{param.value}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-            <th>
-                <ul>
-                    {% for photo in cheapest_offer_per_meter.photos %}
-                    <li>{{photo}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-        </tr>
-    </tbody>
-</table>
-</div>
-
-<div class="container">
-<h1>Cheapest offer</h1>
-
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Title & Url</th>
-            <th scope="col">Created date</th>
-            <th scope="col">City & region</th>
-            <th scope="col">Params</th>
-            <th scope="col">Photos</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th><img class="table-image" src="{{ cheapest_offer.photos[0] }}"></th>
-            <th><a href={{cheapest_offer.url}}>{{cheapest_offer.title}}</a></th>
-            <th>{{cheapest_offer.created_time}}</th>
-            <th>{{cheapest_offer.city}}, {{cheapest_offer.region}}</th>
-            <th>
-                <ul>
-                    {% for param in cheapest_offer.params %}
-                    <li>{{param.name}}: {{param.value}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-            <th>
-                <ul>
-                    {% for photo in cheapest_offer.photos %}
-                    <li>{{photo}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-        </tr>
-    </tbody>
-</table>
-</div>
 
 
 <div class="container">
