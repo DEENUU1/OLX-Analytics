@@ -19,146 +19,78 @@ def return_newest_offers(data_list: List[parser.ParseData]) -> List[parser.Parse
     return newest_offers
 
 
-def return_cheapest_offer(data_list: List[parser.ParseData]) -> parser.ParseData:
-    lowest_price_object = None
-    lowest_price = float("inf")
+def get_price_value(data):
+    for param in data.params:
+        if param.key == "price":
+            price_str = param.value.replace(" ", "")
+            try:
+                return float(price_str[:-2])
+            except ValueError:
+                pass
+    return None
+
+
+def get_param_value(data, key):
+    value = 0
+    for param in data.params:
+        if param.key == key:
+            value_str = param.value_key.replace(" ", "")
+            try:
+                value = float(value_str[:-2])
+            except ValueError:
+                pass
+    return value
+
+
+def find_extreme_offer(data_list, key, compare_func):
+    extreme_offer = None
+    extreme_value = compare_func(0, float("inf"))
 
     for data in data_list:
-        for param in data.params:
-            if param.name == "Cena":
-                price_str = param.value.replace(" ", "")
-                try:
-                    price = float(price_str[:-2])
-                    if price < lowest_price:
-                        lowest_price = price
-                        lowest_price_object = data
-                except ValueError:
-                    pass
-    return lowest_price_object
+        value = get_param_value(data, key)
+        if compare_func(value, extreme_value):
+            extreme_value = value
+            extreme_offer = data
+
+    return extreme_offer
 
 
-def return_average_price(data_list: List[parser.ParseData]) -> float:
+def return_average_price(data_list):
     total_price = 0
-    for data in data_list:
-        for param in data.params:
-            if param.name == "Cena":
-                price_str = param.value.replace(" ", "")
-                try:
-                    price = float(price_str[:-2])
-                    total_price += price
-                except ValueError:
-                    pass
-    return round(total_price / len(data_list), 2)
-
-
-def return_cheapest_offer_per_meter(
-    data_list: List[parser.ParseData],
-) -> parser.ParseData:
-    lowest_price_object = None
-    lowest_price = float("inf")
+    count = 0
 
     for data in data_list:
-        for param in data.params:
-            if param.key == "price_per_m":
-                price_str = param.value_key.replace(" ", "")
-                try:
-                    price = float(price_str[:-2])
-                    if price < lowest_price:
-                        lowest_price = price
-                        lowest_price_object = data
-                except ValueError:
-                    pass
-    return lowest_price_object
+        price = get_price_value(data)
+        if price is not None:
+            total_price += price
+            count += 1
+
+    return round(total_price / count, 2)
 
 
-def return_average_price_per_meter(data_list: List[parser.ParseData]) -> float:
+def return_average_price_per_meter(data_list):
     total_price = 0
-    for data in data_list:
-        for param in data.params:
-            if param.key == "price_per_m":
-                price_str = param.value_key.replace(" ", "")
-                try:
-                    price = float(price_str[:-2])
-                    total_price += price
-                except ValueError:
-                    pass
-    return round(total_price / len(data_list), 2)
-
-
-def return_most_expensive_offer(data_list: List[parser.ParseData]) -> parser.ParseData:
-    highest_price_object = None
-    highest_price = 0
+    count = 0
 
     for data in data_list:
-        for param in data.params:
-            if param.name == "Cena":
-                price_str = param.value.replace(" ", "")
-                try:
-                    price = float(price_str[:-2])
-                    if price > highest_price:
-                        highest_price = price
-                        highest_price_object = data
-                except ValueError:
-                    pass
-    return highest_price_object
+        price = get_param_value(data, "price_per_m")
+        total_price += price
+        count += 1
+
+    return round(total_price / count, 2)
 
 
-def return_most_expensive_offer_per_meter(
-    data_list: List[parser.ParseData],
-) -> parser.ParseData:
-    highest_price_object = None
-    highest_price = 0
-
-    for data in data_list:
-        for param in data.params:
-            if param.key == "price_per_m":
-                price_str = param.value_key.replace(" ", "")
-                try:
-                    price = float(price_str[:-2])
-                    if price > highest_price:
-                        highest_price = price
-                        highest_price_object = data
-                except ValueError:
-                    pass
-    return highest_price_object
+def return_most_expensive_offer(data_list):
+    return find_extreme_offer(data_list, "price", max)
 
 
-def return_offer_largest_area_building(
-    data_list: List[parser.ParseData],
-) -> parser.ParseData:
-    highest_area_object = None
-    highest_area = 0
-
-    for data in data_list:
-        for param in data.params:
-            if param.key == "m":
-                area_str = param.value_key.replace(" ", "")
-                try:
-                    area = float(area_str[:-2])
-                    if area > highest_area:
-                        highest_area = area
-                        highest_area_object = data
-                except ValueError:
-                    pass
-    return highest_area_object
+def return_most_expensive_offer_per_meter(data_list):
+    return find_extreme_offer(data_list, "price_per_m", max)
 
 
-def return_offer_largest_area_plot(
-    data_list: List[parser.ParseData],
-) -> parser.ParseData:
-    largest_area_object = None
-    largest_area = 0
+def return_offer_largest_area_building(data_list):
+    return find_extreme_offer(data_list, "m", max)
 
-    for data in data_list:
-        for param in data.params:
-            if param.key == "area":
-                area_str = param.value_key.replace(" ", "")
-                try:
-                    area = float(area_str[:-2])
-                    if area > largest_area:
-                        largest_area = area
-                        largest_area_object = data
-                except ValueError:
-                    pass
 
-    return largest_area_object
+def return_offer_largest_area_plot(data_list):
+    return find_extreme_offer(data_list, "area", max)
