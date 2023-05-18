@@ -23,20 +23,14 @@ class Localization:
             response.raise_for_status()
             return json.loads(response.content)
         except Exception as e:
-            print(e)
             return None
 
     def return_localization_data(self):
         data = self.get_localization_data()
         if data:
-            try:
-                return LocalizationData(
-                    data["data"]["region_id"],
-                    data["data"]["city_id"],
-                    data["metadata"]["names"]["location"]["city"]["name"],
-                )
-            except Exception as e:
-                print(e)
-                return None
-        else:
-            return None
+            return LocalizationData(
+                data["data"]["region_id"],
+                data["data"]["city_id"],
+                data["metadata"]["names"]["location"]["city"]["name"],
+            )
+        return None
