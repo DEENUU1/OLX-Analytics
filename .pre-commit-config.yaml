@@ -8,9 +8,18 @@ repos:
     - id: check-added-large-files
     - id: debug-statements
       language_version: python3
-      exclude: ^requirements.txt
+
 - repo: https://github.com/psf/black
   rev: 22.3.0
   hooks:
     - id: black
       args: [--safe]
+
+- repo: local
+  hooks:
+    - id: skip-requirements-txt
+      name: Skip requirements.txt
+      entry: echo "Skipping requirements.txt"
+      language: system
+      pass_filenames: false
+      files: ^requirements\.txt$
