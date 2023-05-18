@@ -88,7 +88,7 @@ def results_view():
             )
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
-            print(url)
+            print(d[:3])
             s = operation.return_newest_offers(d)
             y = operation.return_average_price(d)
             f = operation.return_average_price_per_meter(d)
