@@ -85,13 +85,10 @@ def results_view():
                 area_min=apartment_data["area_min"],
                 area_max=apartment_data["area_max"],
             )
-
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
             s = operation.return_newest_offers(d)
-            z = operation.return_cheapest_offer(d)
             y = operation.return_average_price(d)
-            g = operation.return_cheapest_offer_per_meter(d)
             f = operation.return_average_price_per_meter(d)
             v = operation.return_most_expensive_offer(d)
             i = operation.return_most_expensive_offer_per_meter(d)
@@ -102,9 +99,7 @@ def results_view():
                 "results.html",
                 data_list=d,
                 newest_offers=s,
-                cheapest_offer=z,
                 average_price=y,
-                cheapest_offer_per_meter=g,
                 average_price_per_meter=f,
                 most_expensive_offer=v,
                 most_expensive_offer_per_meter=i,
@@ -122,12 +117,8 @@ def results_view():
             )
             x = parser.Parser(fetch_data.FetchData(url).fetch_data())
             d = x.data_parser()
-            print(url)
-            print(d)
             s = operation.return_newest_offers(d)
-            z = operation.return_cheapest_offer(d)
             y = operation.return_average_price(d)
-            g = operation.return_cheapest_offer_per_meter(d)
             f = operation.return_average_price_per_meter(d)
             v = operation.return_most_expensive_offer(d)
             i = operation.return_most_expensive_offer_per_meter(d)
@@ -138,9 +129,7 @@ def results_view():
                 "results.html",
                 data_list=d,
                 newest_offers=s,
-                cheapest_offer=z,
                 average_price=y,
-                cheapest_offer_per_meter=g,
                 average_price_per_meter=f,
                 most_expensive_offer=v,
                 most_expensive_offer_per_meter=i,
