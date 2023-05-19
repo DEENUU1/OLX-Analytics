@@ -2,6 +2,7 @@ from .models import User
 from data import fetch_data, parser
 from .email import send_email
 
+
 def return_users():
     users = User.query.all()
     send_email_objs = []
@@ -19,5 +20,3 @@ def return_users():
             send_email_objs.append(send_email_obj)
 
     return send_email_objs
-
-

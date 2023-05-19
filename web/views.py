@@ -3,8 +3,6 @@ from data import fetch_data, parser, localization
 from operation import operation
 from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm
 from . import shedule_task
-from .email import send_email
-
 
 views = Blueprint("views", __name__)
 
@@ -69,6 +67,20 @@ def search_house_view():
     return render_template("search_house.html", form=form)
 
 
+def get_result_data(url):
+    x = parser.Parser(fetch_data.FetchData(url).fetch_data())
+    d = x.data_parser()
+    s = operation.return_newest_offers(d)
+    y = operation.return_average_price(d)
+    f = operation.return_average_price_per_meter(d)
+    v = operation.return_most_expensive_offer(d)
+    i = operation.return_most_expensive_offer_per_meter(d)
+    u = operation.return_offer_largest_area_building(d)
+    l = operation.return_offer_largest_area_plot(d)
+
+    return d, s, y, f, v, i, u, l
+
+
 @views.route("/results", methods=["GET", "POST"])
 def results_view():
     category_data = session.get("category_data")
@@ -80,7 +92,6 @@ def results_view():
             apartment_data = session.get("apartment_data")
             localization_data = localization.Localization(category_data["city"])
             url = fetch_data.UrlBuilderApartment().build_url(
-                limit="40",
                 build_type=apartment_data["build_type"],
                 furrooms=apartment_data["rooms"],
                 niture=apartment_data["furniture"],
@@ -89,65 +100,38 @@ def results_view():
                 city_id=localization_data.return_localization_data().city_id,
                 region_id=localization_data.return_localization_data().region_id,
             )
-            x = parser.Parser(fetch_data.FetchData(url).fetch_data())
-            d = x.data_parser()
-            print(url)
-            s = operation.return_newest_offers(d)
-            y = operation.return_average_price(d)
-            f = operation.return_average_price_per_meter(d)
-            v = operation.return_most_expensive_offer(d)
-            i = operation.return_most_expensive_offer_per_meter(d)
-            u = operation.return_offer_largest_area_building(d)
-            l = operation.return_offer_largest_area_plot(d)
-
-            return render_template(
-                "results.html",
-                data_list=d,
-                newest_offers=s,
-                average_price=y,
-                average_price_per_meter=f,
-                most_expensive_offer=v,
-                most_expensive_offer_per_meter=i,
-                largest_area_building=u,
-                largest_area_plot=l,
-            )
-
         elif category == "1309":
             house_data = session.get("house_data")
             localization_data = localization.Localization(category_data["city"])
-            url = fetch_data.UrlBuilderApartment().build_url(
-                limit="40",
+            print(house_data["area_min"])
+            url = fetch_data.UrlBuilderHouse().build_url(
                 build_type=house_data["build_type"],
                 area_min=house_data["area_min"],
                 area_max=house_data["area_max"],
+                plot_area_min=house_data["area_plot_min"],
+                plot_area_max=house_data["area_plot_max"],
                 city_id=localization_data.return_localization_data().city_id,
                 region_id=localization_data.return_localization_data().region_id,
             )
-            x = parser.Parser(fetch_data.FetchData(url).fetch_data())
-            d = x.data_parser()
-            s = operation.return_newest_offers(d)
-            y = operation.return_average_price(d)
-            f = operation.return_average_price_per_meter(d)
-            v = operation.return_most_expensive_offer(d)
-            i = operation.return_most_expensive_offer_per_meter(d)
-            u = operation.return_offer_largest_area_building(d)
-            l = operation.return_offer_largest_area_plot(d)
 
-            return render_template(
-                "results.html",
-                data_list=d,
-                newest_offers=s,
-                average_price=y,
-                average_price_per_meter=f,
-                most_expensive_offer=v,
-                most_expensive_offer_per_meter=i,
-                largest_area_building=u,
-                largest_area_plot=l,
-            )
+        d, s, y, f, v, i, u, l = get_result_data(url)
+
+        return render_template(
+            "results.html",
+            data_list=d,
+            newest_offers=s,
+            average_price=y,
+            average_price_per_meter=f,
+            most_expensive_offer=v,
+            most_expensive_offer_per_meter=i,
+            largest_area_building=u,
+            largest_area_plot=l,
+        )
+
     return render_template("results.html")
+
 
 @views.route("/users", methods=["GET", "POST"])
 def users():
     shedule = shedule_task.return_users()
-
     return render_template("users.html", shedule=shedule)

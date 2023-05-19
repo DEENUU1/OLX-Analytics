@@ -16,10 +16,10 @@ class SearchByCategories(FlaskForm):
         ("300000", "300000"),
     ]
 
-    category = SelectField("Category", choices=CATEGORIES, default="")
-    price_min = SelectField("Price min", choices=PRICE_VALUES, default="")
-    price_max = SelectField("Price max", choices=PRICE_VALUES, default="")
-    city = StringField("City", default="")
+    category = SelectField("Category", choices=CATEGORIES)
+    price_min = SelectField("Price min", choices=PRICE_VALUES)
+    price_max = SelectField("Price max", choices=PRICE_VALUES)
+    city = StringField("City", default=None, render_kw={"placeholder": "City name"})
 
 
 class SearchApartmentForm(FlaskForm):
@@ -49,11 +49,11 @@ class SearchApartmentForm(FlaskForm):
         ("150", "150"),
     ]
 
-    build_type = SelectField("Build type", choices=BUILD_TYPE, default="")
-    furniture = SelectField("Furniture", choices=FURNITURE, default="")
-    rooms = SelectField("Rooms", choices=ROOMS, default="")
-    area_min = SelectField("Area min", choices=AREA_VALUES, default="")
-    area_max = SelectField("Area max", choices=AREA_VALUES, default="")
+    build_type = SelectField("Build type", choices=BUILD_TYPE)
+    furniture = SelectField("Furniture", choices=FURNITURE)
+    rooms = SelectField("Rooms", choices=ROOMS)
+    area_min = SelectField("Area min", choices=AREA_VALUES)
+    area_max = SelectField("Area max", choices=AREA_VALUES)
 
 
 class SearchHouseForm(FlaskForm):
@@ -66,15 +66,15 @@ class SearchHouseForm(FlaskForm):
         ("pozostałe", "Pozostałe"),
     ]
     AREA_VALUES = [
-        ("35", "35"),
+        ("30", "30"),
         ("60", "60"),
-        ("80", "80"),
-        ("100", "100"),
+        ("90", "90"),
         ("125", "125"),
         ("150", "150"),
         ("175", "175"),
         ("225", "225"),
-        ("350", "350"),
+        ("250", "250"),
+        ("500", "500"),
     ]
     AREA_PLOT_VALUES = [
         ("500", "500"),
@@ -94,11 +94,11 @@ class SearchHouseForm(FlaskForm):
 class RegisterForm(FlaskForm):
     CATEGORIES = [("1307", "Apartments"), ("1309", "Houses")]
 
-    email = EmailField(validators=[InputRequired()])
-    category = SelectField(
-        validators=[InputRequired()], choices=CATEGORIES, default=""
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    category = SelectField(validators=[InputRequired()], choices=CATEGORIES)
+    city = StringField(
+        validators=[InputRequired()], render_kw={"placeholder": "City name"}
     )
-    city = StringField(validators=[InputRequired()], default="")
 
     def validate_email(self, email):
         """This method is checking if email already exist in database"""
@@ -110,7 +110,7 @@ class RegisterForm(FlaskForm):
 
 
 class DeleteAccountForm(FlaskForm):
-    email = EmailField(validators=[InputRequired()])
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
 
     def validate_email(self, email):
         """This method is checking if email already exist in database"""
