@@ -17,7 +17,6 @@ def home_view():
             "category": form.category.data,
             "price_min": form.price_min.data,
             "price_max": form.price_max.data,
-            "region": form.region.data,
             "city": form.city.data,
         }
         if category == "1307":
@@ -143,3 +142,4 @@ def results_view():
                 largest_area_building=u,
                 largest_area_plot=l,
             )
+    return render_template("results.html")
