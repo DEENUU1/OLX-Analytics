@@ -5,12 +5,7 @@ from web import create_app
 @pytest.fixture()
 def app():
     app = create_app()
-    app.config.update(
-        {
-            "TESTING": True,
-            "SECRET_KEY": "testsecretkey"
-        }
-    )
+    app.config.update({"TESTING": True, "SECRET_KEY": "testsecretkey"})
 
     yield app
 

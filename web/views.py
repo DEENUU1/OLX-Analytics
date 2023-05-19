@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, session, redirect, url_for
 from data import fetch_data, parser, localization
 from operation import operation
 from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm
-from . import shedule_task
+from . import schedule_task
 
 views = Blueprint("views", __name__)
 
@@ -129,9 +129,3 @@ def results_view():
         )
 
     return render_template("results.html")
-
-
-@views.route("/users", methods=["GET", "POST"])
-def users():
-    shedule = shedule_task.return_users()
-    return render_template("users.html", shedule=shedule)
