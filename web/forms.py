@@ -107,3 +107,15 @@ class RegisterForm(FlaskForm):
             raise ValidationError(
                 "That email already exists. Please choose a different one."
             )
+
+
+class DeleteAccountForm(FlaskForm):
+    email = EmailField(validators=[InputRequired()])
+
+    def validate_email(self, email):
+        """This method is checking if email already exist in database"""
+        existing_user_email = User.query.filter_by(email=email.data).first()
+        if not existing_user_email:
+            raise ValidationError(
+                "That email does not exist. Please choose a different one."
+            )

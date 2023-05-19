@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 
 from web import db
 from .models import User
-from .forms import RegisterForm
+from .forms import RegisterForm, DeleteAccountForm
 from data import fetch_data
 from data import localization
 
@@ -39,3 +39,16 @@ def register():
             return redirect(url_for("views.home_view"))
 
     return render_template("auth/register.html", form=form)
+
+
+@auth.route("/delete", methods=["POST", "GET"])
+def delete_account():
+    form = DeleteAccountForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        db.session.delete(user)
+        db.session.commit()
+        flash("Your account has been deleted", category="success")
+        return redirect(url_for("views.home_view"))
+
+    return render_template("auth/delete_account.html", form=form)
