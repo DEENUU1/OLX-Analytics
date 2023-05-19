@@ -5,12 +5,20 @@ from dataclasses import dataclass
 
 @dataclass
 class LocalizationData:
+    """
+    Dataclass for storing localization data
+    """
+
     region_id: int
     city_id: int
     city_name: str
 
 
 class Localization:
+    """
+    Fetching licalization data from OLX API
+    """
+
     def __init__(self, city_name: str):
         self.city_name = city_name
         self.base_url = (
@@ -18,12 +26,10 @@ class Localization:
         )
 
     def get_localization_data(self):
-        try:
-            response = get(self.base_url)
-            response.raise_for_status()
-            return json.loads(response.content)
-        except Exception as e:
+        response = get(self.base_url)
+        if response.status_code != 200:
             return None
+        return json.loads(response.content)
 
     def return_localization_data(self):
         data = self.get_localization_data()

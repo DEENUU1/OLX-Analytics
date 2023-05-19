@@ -6,6 +6,7 @@ from email.message import EmailMessage
 
 load_dotenv()
 
+
 def send_email(subject: str, message: Any, to: str):
     email = EmailMessage()
     email["Subject"] = subject
@@ -14,5 +15,12 @@ def send_email(subject: str, message: Any, to: str):
     email.set_content(str(message))
 
     with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-        server.login(os.getenv("EMAIL_USERNAME"), os.getenv("EMAIL_PASSWORD"))
-        server.send_message(email)
+        try:
+            server.login(os.getenv("EMAIL_USERNAME"), os.getenv("EMAIL_PASSWORD"))
+        except Exception as e:
+            return f"Failed to login to email {e}"
+
+        try:
+            server.send_message(email)
+        except Exception as e:
+            return f"Failed to send email {e}"

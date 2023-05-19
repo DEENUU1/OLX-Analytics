@@ -3,22 +3,30 @@ from typing import List
 
 
 @dataclass
-class ParseData:
-    url: str
-    title: str
-    created_time: str
-    params: list
-    photos: list
-    city: str
-    region: str
-
-
-@dataclass
 class ParamsData:
+    """
+    Dataclass for params
+    """
+
     key: str
     name: str
     value: str
     value_key: str
+
+
+@dataclass
+class ParseData:
+    """
+    Dataclass for parsed data
+    """
+
+    url: str
+    title: str
+    created_time: str
+    params: List[ParamsData]
+    photos: List[str]
+    city: str
+    region: str
 
 
 class Parser:
