@@ -1,6 +1,5 @@
 import pytest
 from web import create_app
-from flask import Markup, session
 
 
 @pytest.fixture()

@@ -32,7 +32,7 @@ def register():
                 city_id=localization_data.return_localization_data().city_id,
                 region_id=localization_data.return_localization_data().region_id,
             )
-            new_user = User(email=form.email.data, username=form.username.data, url=url)
+            new_user = User(email=form.email.data, url=url)
             db.session.add(new_user)
             db.session.commit()
             flash("Welcome on the website", category="success")
