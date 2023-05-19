@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}OLX Analitics | Register{% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="/static/css/result.css" />
+{% endblock %}
+
+
+{% block content %}
+
+
+<form method="POST">
+  {{ form.hidden_tag() }}
+  {{form.email}}
+  {{form.category}}
+  {{form.city}}
+  <button type="submit" class="btn btn-primary">Register</button>
+</form>
+
+
+{% endblock %}

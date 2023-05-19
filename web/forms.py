@@ -1,5 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, EmailField, TextAreaField
+from wtforms.validators import InputRequired, Length, ValidationError
+from .models import User
 
 
 class SearchByCategories(FlaskForm):
@@ -87,3 +89,33 @@ class SearchHouseForm(FlaskForm):
     area_max = SelectField("Area max", choices=AREA_VALUES)
     area_plot_min = SelectField("Area plo mint", choices=AREA_PLOT_VALUES)
     area_plot_max = SelectField("Area plot max", choices=AREA_PLOT_VALUES)
+
+
+class RegisterForm(FlaskForm):
+    CATEGORIES = [("1307", "Apartments"), ("1309", "Houses")]
+
+    email = EmailField(validators=[InputRequired()])
+    category = SelectField(
+        validators=[InputRequired()], choices=CATEGORIES, default=""
+    )
+    city = StringField(validators=[InputRequired()], default="")
+
+    def validate_email(self, email):
+        """This method is checking if email already exist in database"""
+        existing_user_email = User.query.filter_by(email=email.data).first()
+        if existing_user_email:
+            raise ValidationError(
+                "That email already exists. Please choose a different one."
+            )
+
+
+class DeleteAccountForm(FlaskForm):
+    email = EmailField(validators=[InputRequired()])
+
+    def validate_email(self, email):
+        """This method is checking if email already exist in database"""
+        existing_user_email = User.query.filter_by(email=email.data).first()
+        if not existing_user_email:
+            raise ValidationError(
+                "That email does not exist. Please choose a different one."
+            )
