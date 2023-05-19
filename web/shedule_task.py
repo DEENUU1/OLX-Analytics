@@ -1,9 +1,10 @@
 from .models import User
 from data import fetch_data, parser
+from .email import send_email
 
 def return_users():
     users = User.query.all()
-    parse_data_list = []
+    send_email_objs = []
 
     for user in users:
         user_url = user.url
@@ -14,6 +15,9 @@ def return_users():
         if data is not None:
             parse_data_obj = parser.Parser(data)
             parse_data = parse_data_obj.data_parser()
-            parse_data_list.extend(parse_data)
+            send_email_obj = send_email("Dane", parse_data, user.email)
+            send_email_objs.append(send_email_obj)
 
-    return parse_data_list
+    return send_email_objs
+
+
