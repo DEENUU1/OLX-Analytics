@@ -17,7 +17,6 @@ class SearchByCategories(FlaskForm):
     category = SelectField("Category", choices=CATEGORIES, default="")
     price_min = SelectField("Price min", choices=PRICE_VALUES, default="")
     price_max = SelectField("Price max", choices=PRICE_VALUES, default="")
-    region = StringField("Region", default="")
     city = StringField("City", default="")
 
 
