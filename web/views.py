@@ -3,6 +3,7 @@ from data import fetch_data, parser, localization
 from operation import operation
 from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm
 from . import schedule_task
+from .models import User
 
 views = Blueprint("views", __name__)
 
@@ -10,7 +11,7 @@ views = Blueprint("views", __name__)
 @views.route("/", methods=["GET", "POST"])
 def home_view():
     form = SearchByCategories()
-
+    users = User.query.all()
     if form.validate_on_submit():
         category = form.category.data
         session["category_data"] = {
@@ -24,7 +25,7 @@ def home_view():
         elif category == "1309":
             return redirect(url_for("views.search_house_view"))
 
-    return render_template("home.html", form=form)
+    return render_template("home.html", form=form, users=users)
 
 
 @views.route("/search_apartment", methods=["GET", "POST"])
