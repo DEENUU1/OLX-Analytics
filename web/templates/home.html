@@ -15,10 +15,11 @@
   {{form.category}}
   {{form.price_min}}
   {{form.price_max}}
-  {{form.region}}
   {{form.city}}
   <button type="submit" class="btn btn-primary">Search</button>
 </form>
-
+{% for x in users %}
+  {{x.email}}
+{% endfor %}
 
 {% endblock %}
