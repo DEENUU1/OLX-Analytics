@@ -64,8 +64,11 @@ def return_average_price(data_list):
         if price is not None:
             total_price += price
             count += 1
-
-    return round(total_price / count, 2)
+    try:
+        calculate_avg_price = round(total_price / count, 2)
+    except ZeroDivisionError:
+        calculate_avg_price = 0.0
+    return calculate_avg_price
 
 
 def return_average_price_per_meter(data_list):
@@ -76,8 +79,11 @@ def return_average_price_per_meter(data_list):
         price = get_param_value(data, "price_per_m")
         total_price += price
         count += 1
-
-    return round(total_price / count, 2)
+    try:
+        calculate_avg_price = round(total_price / count, 2)
+    except:
+        calculate_avg_price = 0.0
+    return calculate_avg_price
 
 
 def return_most_expensive_offer(data_list):

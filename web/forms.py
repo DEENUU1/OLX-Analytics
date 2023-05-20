@@ -1,5 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, EmailField, TextAreaField
+from wtforms.validators import InputRequired, Length, ValidationError
+from .models import User
 
 
 class SearchByCategories(FlaskForm):
@@ -14,11 +16,10 @@ class SearchByCategories(FlaskForm):
         ("300000", "300000"),
     ]
 
-    category = SelectField("Category", choices=CATEGORIES, default="")
-    price_min = SelectField("Price min", choices=PRICE_VALUES, default="")
-    price_max = SelectField("Price max", choices=PRICE_VALUES, default="")
-    region = StringField("Region", default="")
-    city = StringField("City", default="")
+    category = SelectField("Category", choices=CATEGORIES)
+    price_min = SelectField("Price min", choices=PRICE_VALUES)
+    price_max = SelectField("Price max", choices=PRICE_VALUES)
+    city = StringField("City", default=None, render_kw={"placeholder": "City name"})
 
 
 class SearchApartmentForm(FlaskForm):
@@ -48,11 +49,11 @@ class SearchApartmentForm(FlaskForm):
         ("150", "150"),
     ]
 
-    build_type = SelectField("Build type", choices=BUILD_TYPE, default="")
-    furniture = SelectField("Furniture", choices=FURNITURE, default="")
-    rooms = SelectField("Rooms", choices=ROOMS, default="")
-    area_min = SelectField("Area min", choices=AREA_VALUES, default="")
-    area_max = SelectField("Area max", choices=AREA_VALUES, default="")
+    build_type = SelectField("Build type", choices=BUILD_TYPE)
+    furniture = SelectField("Furniture", choices=FURNITURE)
+    rooms = SelectField("Rooms", choices=ROOMS)
+    area_min = SelectField("Area min", choices=AREA_VALUES)
+    area_max = SelectField("Area max", choices=AREA_VALUES)
 
 
 class SearchHouseForm(FlaskForm):
@@ -65,15 +66,15 @@ class SearchHouseForm(FlaskForm):
         ("pozostałe", "Pozostałe"),
     ]
     AREA_VALUES = [
-        ("35", "35"),
+        ("30", "30"),
         ("60", "60"),
-        ("80", "80"),
-        ("100", "100"),
+        ("90", "90"),
         ("125", "125"),
         ("150", "150"),
         ("175", "175"),
         ("225", "225"),
-        ("350", "350"),
+        ("250", "250"),
+        ("500", "500"),
     ]
     AREA_PLOT_VALUES = [
         ("500", "500"),
@@ -88,3 +89,33 @@ class SearchHouseForm(FlaskForm):
     area_max = SelectField("Area max", choices=AREA_VALUES)
     area_plot_min = SelectField("Area plo mint", choices=AREA_PLOT_VALUES)
     area_plot_max = SelectField("Area plot max", choices=AREA_PLOT_VALUES)
+
+
+class RegisterForm(FlaskForm):
+    CATEGORIES = [("1307", "Apartments"), ("1309", "Houses")]
+
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+    category = SelectField(validators=[InputRequired()], choices=CATEGORIES)
+    city = StringField(
+        validators=[InputRequired()], render_kw={"placeholder": "City name"}
+    )
+
+    def validate_email(self, email):
+        """This method is checking if email already exist in database"""
+        existing_user_email = User.query.filter_by(email=email.data).first()
+        if existing_user_email:
+            raise ValidationError(
+                "That email already exists. Please choose a different one."
+            )
+
+
+class DeleteAccountForm(FlaskForm):
+    email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
+
+    def validate_email(self, email):
+        """This method is checking if email already exist in database"""
+        existing_user_email = User.query.filter_by(email=email.data).first()
+        if not existing_user_email:
+            raise ValidationError(
+                "That email does not exist. Please choose a different one."
+            )
