@@ -20,7 +20,7 @@ class SearchByCategories(FlaskForm):
     category = SelectField("Category", choices=CATEGORIES)
     price_min = SelectField("Price min", choices=PRICE_VALUES)
     price_max = SelectField("Price max", choices=PRICE_VALUES)
-    city = StringField("City", default=None, render_kw={"placeholder": "City name"})
+    city = StringField("City", validators=[InputRequired()], default=None, render_kw={"placeholder": "City name"})
 
     def validate_city_name(self, city):
         city_clear_polish_char = unidecode(str(city))
