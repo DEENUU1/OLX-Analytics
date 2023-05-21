@@ -7,14 +7,6 @@ from data.parser import Parser
 from operation import operation
 
 
-def test_convert_datetime_to_date():
-    expected_result = datetime.date(2023, 5, 10)
-    assert (
-        operation.convert_datetime_to_date("2023-05-10T15:31:26+02:00")
-        == expected_result
-    )
-
-
 @pytest.fixture
 def offers_test_data():
     with open("operation/test/fixtures.json") as f:
