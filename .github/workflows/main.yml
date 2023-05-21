@@ -22,12 +22,13 @@ jobs:
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/flask-app:olx
 
-      - name: Create temporary SSH key file
-        run: echo "${{ secrets.EC2_SSH_KEY }}" > ssh_key.pem && chmod 400 ssh_key.pem
-
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan 18.194.184.98 >> ~/.ssh/known_hosts
+  
       - name: Deploy to EC2 instance
         run: |
-          ssh -i ssh_key.pem ubuntu@18.194.184.98 "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/flask-app:olx && sudo docker stop flask-app-container && sudo docker rm flask-app-container && sudo docker run -d -p 5000:5000 --name flask-app-container ${{ secrets.DOCKER_USERNAME }}/flask-app:olx"
-
-      - name: Cleanup temporary SSH key file
-        run: rm -f ssh_key.pem
+          ssh -i ~/.ssh/id_rsa ubuntu@18.194.184.98 "sudo docker pull ${{ secrets.DOCKER_USERNAME }}/flask-app:olx && sudo docker stop flask-app-container && sudo docker rm flask-app-container && sudo docker run -d -p 5000:5000 --name flask-app-container ${{ secrets.DOCKER_USERNAME }}/flask-app:olx"
