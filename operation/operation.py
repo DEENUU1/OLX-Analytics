@@ -30,23 +30,71 @@ def get_param_value(data, key):
         if param.key == key:
             value_str = param.value_key.replace(" ", "")
             try:
-                value = float(value_str[:-2])
+                value = float(value_str)
             except ValueError:
                 pass
     return value
 
+def return_most_expensive_offer(data_list):
+    max_price_object = None
+    max_price = 0
 
-def find_extreme_offer(data_list, key, compare_func):
-    extreme_offer = None
-    extreme_value = compare_func(0, float("inf"))
+    for obj in data_list:
+        for param in obj.params:
+            if param.key == 'price':
+                price = param.value.replace(' zł', '').replace(' ', '')
+                if price.isdigit() and int(price) > max_price:
+                    max_price = int(price)
+                    max_price_object = obj
+
+    return max_price_object
+
+def return_most_expensive_offer_per_meter(data_list):
+    max_price_per_meter = 0
+    max_price_per_meter_obj = None
 
     for data in data_list:
-        value = get_param_value(data, key)
-        if compare_func(value, extreme_value):
-            extreme_value = value
-            extreme_offer = data
+        for param in data.params:
+            if param.key == "price_per_m":
+                price_per_meter = float(param.value_key)
+                if price_per_meter > max_price_per_meter:
+                    max_price_per_meter = price_per_meter
+                    max_price_per_meter_obj = data
 
-    return extreme_offer
+    return max_price_per_meter_obj
+
+def return_offer_largest_area_building(data_list):
+    max_area = 0
+    max_area_object = None
+
+    for data in data_list:
+        for param in data.params:
+            if param.key == "m":
+                area_str = param.value.split(" ")[0]
+                area = int(area_str.replace(",", ""))
+                if area > max_area:
+                    max_area = area
+                    max_area_object = data
+                break  
+
+    return max_area_object
+
+
+def return_offer_largest_area_plot(data_list):
+    max_area = 0
+    max_area_object = None
+
+    for data in data_list:
+        for param in data.params:
+            if param.key == "area":
+                area_str = param.value.split(" ")[0]
+                area = int(area_str.replace(",", ""))
+                if area > max_area:
+                    max_area = area
+                    max_area_object = data
+                break
+
+    return max_area_object
 
 
 def return_average_price(data_list):
@@ -78,19 +126,3 @@ def return_average_price_per_meter(data_list):
     except:
         calculate_avg_price = 0.0
     return calculate_avg_price
-
-
-def return_most_expensive_offer(data_list):
-    return find_extreme_offer(data_list, "price", max)
-
-
-def return_most_expensive_offer_per_meter(data_list):
-    return find_extreme_offer(data_list, "price_per_m", max)
-
-
-def return_offer_largest_area_building(data_list):
-    return find_extreme_offer(data_list, "m", max)
-
-
-def return_offer_largest_area_plot(data_list):
-    return find_extreme_offer(data_list, "area", max)

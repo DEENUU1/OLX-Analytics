@@ -112,7 +112,7 @@ def results_view():
             )
 
         d, s, y, f, v, i, u, l = get_result_data(url)
-
+        print(d[2])
         return render_template(
             "results.html",
             data_list=d,
