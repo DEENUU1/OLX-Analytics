@@ -1,10 +1,9 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, flash
 
 from web import db
 from .models import User
 from .forms import RegisterForm, DeleteAccountForm, validate_city_name
-from data import fetch_data
-from data import localization
+from base.data import fetch_data, localization
 from .email import send_email
 
 auth = Blueprint("auth", __name__)

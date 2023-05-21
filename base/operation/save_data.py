@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import List
-from data.parser import ParseData
+from base.data.parser import ParseData
 
 
 def save_to_excel(data: List[ParseData], file_path: str):
