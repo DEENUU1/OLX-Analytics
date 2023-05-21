@@ -5,6 +5,14 @@ from .models import User
 from unidecode import unidecode
 
 
+def validate_city_name(city):
+    city_clear_polish_char = unidecode(str(city))
+    city_count_words = city_clear_polish_char.split()
+
+    if len(city_count_words) == 1:
+        return city_clear_polish_char
+    return "-".join(city_count_words)
+
 class SearchByCategories(FlaskForm):
     CATEGORIES = [("1307", "Apartments"), ("1309", "Houses")]
     PRICE_VALUES = [
@@ -20,15 +28,8 @@ class SearchByCategories(FlaskForm):
     category = SelectField("Category", choices=CATEGORIES)
     price_min = SelectField("Price min", choices=PRICE_VALUES)
     price_max = SelectField("Price max", choices=PRICE_VALUES)
-    city = StringField("City", default=None, render_kw={"placeholder": "City name"})
+    city = StringField("City", validators=[InputRequired()], default=None, render_kw={"placeholder": "City name"})
 
-    def validate_city_name(self, city):
-        city_clear_polish_char = unidecode(str(city))
-        city_count_words = city_clear_polish_char.split()
-
-        if len(city_count_words) == 1:
-            return city_clear_polish_char
-        return "-".join(city_count_words)
 
 class SearchApartmentForm(FlaskForm):
     BUILD_TYPE = [

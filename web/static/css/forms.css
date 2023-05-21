@@ -4,13 +4,13 @@
     padding: 0;
     font-family: Arial, sans-serif;
     font-size: 16px;
-    color: #cfcfcf;
-    background-color: black;
+    color: #202020;
+    background-color: rgb(255, 255, 255);
 }
   
 
 #header-container{
-    margin-top: 200px;
+    margin-top: 150px;
     text-align: center;
 }
 
