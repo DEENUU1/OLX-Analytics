@@ -1,9 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for
 from data import fetch_data, parser, localization
 from operation import operation
-from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm
-from . import schedule_task
-from .models import User
+from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm, validate_city_name
 
 views = Blueprint("views", __name__)
 
@@ -11,21 +9,20 @@ views = Blueprint("views", __name__)
 @views.route("/", methods=["GET", "POST"])
 def home_view():
     form = SearchByCategories()
-    users = User.query.all()
     if form.validate_on_submit():
         category = form.category.data
         session["category_data"] = {
             "category": form.category.data,
             "price_min": form.price_min.data,
             "price_max": form.price_max.data,
-            "city": form.city.data,
+            "city": validate_city_name(form.city.data)
         }
         if category == "1307":
             return redirect(url_for("views.search_apartment_view"))
         elif category == "1309":
             return redirect(url_for("views.search_house_view"))
 
-    return render_template("home.html", form=form, users=users)
+    return render_template("home.html", form=form)
 
 
 @views.route("/search_apartment", methods=["GET", "POST"])
@@ -104,7 +101,6 @@ def results_view():
         elif category == "1309":
             house_data = session.get("house_data")
             localization_data = localization.Localization(category_data["city"])
-            print(house_data["area_min"])
             url = fetch_data.UrlBuilderHouse().build_url(
                 build_type=house_data["build_type"],
                 area_min=house_data["area_min"],

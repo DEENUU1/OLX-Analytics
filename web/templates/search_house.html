@@ -17,18 +17,23 @@
 <div class="container" id="form-container">
   <form method="POST" class="form-inline">
     {{ form.hidden_tag() }}
+    <label for="formGroupExampleInput">Build type</label>
     <div class="form-group">
     {{form.build_type(class="form-control")}}
     </div>  
+    <label for="formGroupExampleInput">Minumum area</label>
     <div class="form-group">
     {{form.area_min(class="form-control")}}
     </div>
+    <label for="formGroupExampleInput">Maximum area</label>
     <div class="form-group">
     {{form.area_max(class="form-control")}}
     </div>
+    <label for="formGroupExampleInput">Minumim plot area</label>
     <div class="form-group">
     {{form.area_plot_min(class="form-control")}}
     </div>
+    <label for="formGroupExampleInput">Maximum plot area</label>
     <div class="form-group">  
     {{form.area_plot_max(class="form-control")}}
     </div>
