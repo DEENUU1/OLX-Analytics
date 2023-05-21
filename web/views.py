@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for
-from data import fetch_data, parser, localization
-from operation import operation
+from base.data import parser, localization
+from base.data import fetch_data
+from base.operation import operation
 from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm, validate_city_name
 
 views = Blueprint("views", __name__)

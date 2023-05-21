@@ -1,10 +1,11 @@
-from .models import User
-from data import fetch_data, parser
-from .email import send_email
+from web.models import User
+from base.data import parser
+from base.data import fetch_data
+from web.email import send_email
 from web import create_app
 
 
-def return_users():
+def send_newest_offers():
     with create_app().app_context():
         users = User.query.all()
         send_email_objs = []

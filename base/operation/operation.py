@@ -1,4 +1,4 @@
-from data import parser
+from base.data import parser
 from typing import List
 import datetime
 
@@ -123,6 +123,6 @@ def return_average_price_per_meter(data_list):
         count += 1
     try:
         calculate_avg_price = round(total_price / count, 2)
-    except:
+    except ZeroDivisionError:
         calculate_avg_price = 0.0
     return calculate_avg_price

@@ -1,5 +1,5 @@
 import datetime
-from data.parser import convert_datetime_to_date
+from base.data.parser import convert_datetime_to_date
 
 
 def test_convert_datetime_to_date():
