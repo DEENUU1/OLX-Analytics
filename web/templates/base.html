@@ -12,7 +12,7 @@
   {% block script %}{% endblock %}
 </head>
 <body>
-<!-- Include navigation bar here later -->
+{% include "base/navigation_bar.html" %}
 
   <!-- ERROR MESSAGES -->
   {% with messages = get_flashed_messages(category_filter=["error"]) %}
