@@ -8,7 +8,7 @@
 
 .box {
     display: inline-block;
-    padding: 20px;
+    padding: 10px;
     background-color: rgb(0, 171, 3);
     margin: 5px;
 }
@@ -20,8 +20,14 @@
 
 .box h3 {
     font-weight: 600;
+    font-size: 20px;
 }
 
 ul li {
     list-style-type: none;
+}
+
+#collapse-link {
+    text-decoration: none;
+    color: black;
 }
