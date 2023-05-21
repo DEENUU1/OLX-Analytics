@@ -18,8 +18,9 @@ def home_view():
             "category": form.category.data,
             "price_min": form.price_min.data,
             "price_max": form.price_max.data,
-            "city": form.city.data,
+            "city": form.validate_city_name(form.city.data)
         }
+        print(form.validate_city_name(form.city.data))
         if category == "1307":
             return redirect(url_for("views.search_apartment_view"))
         elif category == "1309":
