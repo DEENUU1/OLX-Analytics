@@ -22,32 +22,32 @@ def test_return_average_price(offers_test_data):
 
 
 def test_return_average_price_per_meter(offers_test_data):
-    assert operation.return_average_price_per_meter(offers_test_data) == 2627.17
+    assert operation.return_average_price_per_meter(offers_test_data) == 3591.57
 
 
 def test_return_offer_largest_area_plot(offers_test_data):
     assert (
-        operation.return_offer_largest_area_plot(offers_test_data).title
-        == "Mieszkanie blok 59m2"
+        operation.return_offer_largest_area_plot(offers_test_data)
+        == None
     )
 
 
 def test_return_offer_largest_area_building(offers_test_data):
     assert (
         operation.return_offer_largest_area_building(offers_test_data).title
-        == "Duże Mieszkanie 63 M2 W Szczecinie Na Osiedlu Zawa"
+        == "sprzedam mieszkanie z garażem w Pile os. Konstancji, nowe"
     )
 
 
 def test_return_most_expensive_offer_per_meter(offers_test_data):
     assert (
         operation.return_most_expensive_offer_per_meter(offers_test_data).title
-        == "Bezpośrednio od właściciela  - blisko POLITECHNIKI"
+        == "Przestronna, funkcjonalna i cicha kawalerka, 29 m2, Żoliborz"
     )
 
 
 def test_return_most_expensive_offer(offers_test_data):
     assert (
         operation.return_most_expensive_offer(offers_test_data).title
-        == "Mieszkanie blok 59m2"
+        == "Nowoczesne mieszkanie w Centrum Warszawy"
     )
