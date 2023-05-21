@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from typing import List
+import datetime
 
 
 @dataclass
@@ -29,6 +30,12 @@ class ParseData:
     region: str
 
 
+def convert_datetime_to_date(date_time) -> datetime.date:
+    date_part = date_time.split("T")[0]
+    date_time = datetime.datetime.strptime(date_part, "%Y-%m-%d").date()
+    return date_time
+
+
 class Parser:
     def __init__(self, data):
         self.data = data
@@ -50,7 +57,7 @@ class Parser:
         for object in self.data["data"]:
             url = object["url"]
             title = object["title"]
-            created_time = object["last_refresh_time"]
+            created_time = convert_datetime_to_date(object["last_refresh_time"])
             city = object["location"]["city"]["name"]
             region = object["location"]["region"]["name"]
             params = object.get("params", [])

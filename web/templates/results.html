@@ -10,181 +10,236 @@
 
 {% block content %}
 
-<h1>Average price {{average_price}}</h1>
-<h1>Average price per meter {{average_price_per_meter}}</h1>
-
 <div class="container">
-<h1>The offer with the largest plot area</h1>
+    {% if average_price %}
+    <div class="box">
+        <h3>Average price {{average_price}} PLN</h3>
+    </div>
+    {% endif %}
+    {% if average_price_per_meter %}
+    <div class="box">
+        <h3>Average price per meter {{average_price_per_meter}} PLN</h3>
+    </div>
+    {% endif %}
+</div>
+
 
 {% if largest_area_plot %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Title & Url</th>
-            <th scope="col">Created date</th>
-            <th scope="col">City & region</th>
-            <th scope="col">Params</th>
-            <th scope="col">Photos</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th><img class="table-image" src="{{ largest_area_plot.photos[0] }}"></th>
-            <th><a href={{largest_area_plot.url}}>{{largest_area_plot.title}}</a></th>
-            <th>{{largest_area_plot.created_time}}</th>
-            <th>{{largest_area_plot.city}}, {{largest_area_plot.region}}</th>
-            <th>
-                <ul>
-                    {% for param in largest_area_plot.params %}
-                    <li>{{param.name}}: {{param.value}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-            <th>
-                <ul>
-                    {% for photo in largest_area_plot.photos %}
-                    <li>{{photo}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-        </tr>
-    </tbody>
-</table>
+<div class="container table-responsive">
+<p>
+    <a data-bs-toggle="collapse" href="#largest_area_plot" aria-expanded="false" aria-controls="collapseExample"> <h2>Offer with the largest area of plot</h1> </a>
+</p>
+
+    <div class="collapse" id="largest_area_plot">
+        <div class="card card-body">  
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title & Url</th>
+                        <th scope="col">Created date</th>
+                        <th scope="col">City & region</th>
+                        <th scope="col">Params</th>
+                        <th scope="col">Photos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><img class="table-image" src="{{ largest_area_plot.photos[0] }}"></th>
+                        <th><a href={{largest_area_plot.url}}>{{largest_area_plot.title}}</a></th>
+                        <th>{{largest_area_plot.created_time}}</th>
+                        <th>{{largest_area_plot.city}}, {{largest_area_plot.region}}</th>
+                        <th>
+                            <ul>
+                                {% for param in largest_area_plot.params %}
+                                <li>{{param.name}}: {{param.value}}</li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                        <th>
+                            <ul>
+                                {% for photo in largest_area_plot.photos %}
+                                <li><a href="{{photo}}">Photo</a></li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+{% else %}
+There is no data 
 {% endif %}
 
 
-<div class="container">
-<h1>The most expensive offer per meter^2</h1>
-{% if most_expensive_offer_per_meter %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Title & Url</th>
-            <th scope="col">Created date</th>
-            <th scope="col">City & region</th>
-            <th scope="col">Params</th>
-            <th scope="col">Photos</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th><img class="table-image" src="{{ most_expensive_offer_per_meter.photos[0] }}"></th>
-            <th><a href={{most_expensive_offer_per_meter.url}}>{{most_expensive_offer_per_meter.title}}</a></th>
-            <th>{{most_expensive_offer_per_meter.created_time}}</th>
-            <th>{{most_expensive_offer_per_meter.city}}, {{most_expensive_offer_per_meter.region}}</th>
-            <th>
-                <ul>
-                    {% for param in most_expensive_offer_per_meter.params %}
-                    <li>{{param.name}}: {{param.value}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-            <th>
-                <ul>
-                    {% for photo in most_expensive_offer_per_meter.photos %}
-                    <li>{{photo}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-        </tr>
-    </tbody>
-</table>
+{% if largest_area_building %}
+<div class="container table-responsive">
+<p>
+    <a  data-bs-toggle="collapse" href="#largest_area_building" aria-expanded="false" aria-controls="collapseExample"> <h2>Offer with the largest area of building</h2>
+    </a>
+</p>
+
+    <div class="collapse" id="largest_area_building">
+        <div class="card card-body">  
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title & Url</th>
+                        <th scope="col">Created date</th>
+                        <th scope="col">City & region</th>
+                        <th scope="col">Params</th>
+                        <th scope="col">Photos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><img class="table-image" src="{{ largest_area_building.photos[0] }}"></th>
+                        <th><a href={{largest_area_building.url}}>{{largest_area_building.title}}</a></th>
+                        <th>{{largest_area_building.created_time}}</th>
+                        <th>{{largest_area_building.city}}, {{largest_area_building.region}}</th>
+                        <th>
+                            <ul>
+                                {% for param in largest_area_building.params %}
+                                <li>{{param.name}}: {{param.value}}</li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                        <th>
+                            <ul>
+                                {% for photo in largest_area_building.photos %}
+                                <li><a href="{{photo}}">Photo</a></li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+
 {% endif %}
 
 
-
-<div class="container">
-<h1>The most expensive offer per meter^2</h1>
-{% if most_expensive_offer_per_meter %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Title & Url</th>
-            <th scope="col">Created date</th>
-            <th scope="col">City & region</th>
-            <th scope="col">Params</th>
-            <th scope="col">Photos</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th><img class="table-image" src="{{ most_expensive_offer_per_meter.photos[0] }}"></th>
-            <th><a href={{most_expensive_offer_per_meter.url}}>{{most_expensive_offer_per_meter.title}}</a></th>
-            <th>{{most_expensive_offer_per_meter.created_time}}</th>
-            <th>{{most_expensive_offer_per_meter.city}}, {{most_expensive_offer_per_meter.region}}</th>
-            <th>
-                <ul>
-                    {% for param in most_expensive_offer_per_meter.params %}
-                    <li>{{param.name}}: {{param.value}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-            <th>
-                <ul>
-                    {% for photo in most_expensive_offer_per_meter.photos %}
-                    <li>{{photo}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-        </tr>
-    </tbody>
-</table>
-</div>
-{% endif %}
-
-
-
-<div class="container">
-<h1>The most expensive offer</h1>
 {% if most_expensive_offer %}
-<table class="table table-hover">
-    <thead>
-        <tr>
-            <th scope="col">Image</th>
-            <th scope="col">Title & Url</th>
-            <th scope="col">Created date</th>
-            <th scope="col">City & region</th>
-            <th scope="col">Params</th>
-            <th scope="col">Photos</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th><img class="table-image" src="{{ most_expensive_offer.photos[0] }}"></th>
-            <th><a href={{most_expensive_offer.url}}>{{most_expensive_offer.title}}</a></th>
-            <th>{{most_expensive_offer.created_time}}</th>
-            <th>{{most_expensive_offer.city}}, {{most_expensive_offer.region}}</th>
-            <th>
-                <ul>
-                    {% for param in most_expensive_offer.params %}
-                    <li>{{param.name}}: {{param.value}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-            <th>
-                <ul>
-                    {% for photo in most_expensive_offer.photos %}
-                    <li>{{photo}}</li>
-                    {% endfor %}
-                </ul>
-            </th>
-        </tr>
-    </tbody>
-</table>
+<div class="container table-responsive">
+<p>
+    <a  data-bs-toggle="collapse" href="#most_expensive_offer" aria-expanded="false" aria-controls="collapseExample"> <h2>Most expensive offer </h2>
+    </a>
+</p>
+
+    <div class="collapse" id="most_expensive_offer">
+        <div class="card card-body">  
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title & Url</th>
+                        <th scope="col">Created date</th>
+                        <th scope="col">City & region</th>
+                        <th scope="col">Params</th>
+                        <th scope="col">Photos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><img class="table-image" src="{{ most_expensive_offer.photos[0] }}"></th>
+                        <th><a href={{most_expensive_offer.url}}>{{largest_area_building.title}}</a></th>
+                        <th>{{most_expensive_offer.created_time}}</th>
+                        <th>{{most_expensive_offer.city}}, {{most_expensive_offer.region}}</th>
+                        <th>
+                            <ul>
+                                {% for param in most_expensive_offer.params %}
+                                <li>{{param.name}}: {{param.value}}</li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                        <th>
+                            <ul>
+                                {% for photo in most_expensive_offer.photos %}
+                                <li><a href="{{photo}}">Photo</a></li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+{% else %}
+There is no data 
+{% endif %}
+
+
+{% if most_expensive_offer_per_meter %}
+<div class="container table-responsive">
+<p>
+    <a data-bs-toggle="collapse" href="#most_expensive_offer_per_meter" aria-expanded="false" aria-controls="collapseExample"> <h2> Most expensive offer per meter^2 </h2>
+    </a>
+</p>
+
+    <div class="collapse" id="most_expensive_offer_per_meter">
+        <div class="card card-body">  
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Image</th>
+                        <th scope="col">Title & Url</th>
+                        <th scope="col">Created date</th>
+                        <th scope="col">City & region</th>
+                        <th scope="col">Params</th>
+                        <th scope="col">Photos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th><img class="table-image" src="{{ most_expensive_offer_per_meter.photos[0] }}"></th>
+                        <th><a href={{most_expensive_offer_per_meter.url}}>{{most_expensive_offer_per_meter.title}}</a></th>
+                        <th>{{most_expensive_offer_per_meter.created_time}}</th>
+                        <th>{{most_expensive_offer_per_meter.city}}, {{most_expensive_offer_per_meter.region}}</th>
+                        <th>
+                            <ul>
+                                {% for param in most_expensive_offer_per_meter.params %}
+                                <li>{{param.name}}: {{param.value}}</li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                        <th>
+                            <ul>
+                                {% for photo in most_expensive_offer_per_meter.photos %}
+                                <li><a href="{{photo}}">Photo</a></li>
+                                {% endfor %}
+                            </ul>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% else %}
+There is no data 
 {% endif %}
 
 
 
 
 
-<div class="container">
-<h1>Offers from today</h1>
+
+
+
+
+
+
+
+
+{% if newest_offers %}
+<div class="container table-responsive">
+<h2>Offers from today</h2>
 
 <table class="table table-hover">
     <thead>
@@ -214,7 +269,7 @@
             <th>
                 <ul>
                     {% for photo in data.photos %}
-                    <li>{{photo}}</li>
+                    <li><a href="{{photo}}">Photo</a></li>
                     {% endfor %}
                 </ul>
             </th>
@@ -223,12 +278,14 @@
     {% endfor %}
 </table>
 </div>
+{% else %}
+There is no data 
+{% endif %}
 
-
-<div class="container">
-<h1>All offers</h1>
-
-<table class="table table-hover">
+{% if data_list %}
+<div class="container table-responsive">
+<h2>All offers</h2>
+<table class="table">
     <thead>
         <tr>
             <th scope="col">Image</th>
@@ -256,7 +313,7 @@
             <th>
                 <ul>
                     {% for photo in data.photos %}
-                    <li>{{photo}}</li>
+                    <li><a href="{{photo}}">Photo</a></li>
                     {% endfor %}
                 </ul>
             </th>
@@ -265,6 +322,8 @@
     {% endfor %}
 </table>
 </div>
-
+{% else %}
+There is no data 
+{% endif %}
 
 {% endblock %}
