@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, EmailField, TextAreaField
 from wtforms.validators import InputRequired, Length, ValidationError
 from .models import User
+from unidecode import unidecode
 
 
 class SearchByCategories(FlaskForm):
@@ -21,6 +22,13 @@ class SearchByCategories(FlaskForm):
     price_max = SelectField("Price max", choices=PRICE_VALUES)
     city = StringField("City", default=None, render_kw={"placeholder": "City name"})
 
+    def validate_city_name(self, city):
+        city_clear_polish_char = unidecode(str(city))
+        city_count_words = city_clear_polish_char.split()
+
+        if len(city_count_words) == 1:
+            return city_clear_polish_char
+        return "-".join(city_count_words)
 
 class SearchApartmentForm(FlaskForm):
     BUILD_TYPE = [

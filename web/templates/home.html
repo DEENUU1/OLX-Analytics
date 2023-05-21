@@ -3,23 +3,39 @@
 {% block title %}OLX Analitics | Home Page{% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" type="text/css" href="/static/css/result.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/forms.css" />
 {% endblock %}
 
 
 {% block content %}
 
+<div class="container" id="header-container">
+  <h1>Tell us what are you looking for...</h1>
+</div>
 
-<form method="POST">
-  {{ form.hidden_tag() }}
-  {{form.category}}
-  {{form.price_min}}
-  {{form.price_max}}
-  {{form.city}}
-  <button type="submit" class="btn btn-primary">Search</button>
-</form>
-{% for x in users %}
-  {{x.email}}
-{% endfor %}
+<div class="container" id="form-container">
+  <form method="POST" class="form-inline">
+    {{ form.hidden_tag() }}
+    <label for="formGroupExampleInput">Category</label>
+    <div class="form-group">
+      {{ form.category(class="form-control") }}
+    </div>
+    <label for="formGroupExampleInput">Minimum price</label>
+    <div class="form-group">
+      {{ form.price_min(class="form-control") }}
+    </div>
+    <label for="formGroupExampleInput">Maximum price</label>
+    <div class="form-group">
+      {{ form.price_max(class="form-control") }}
+    </div>
+    <label for="formGroupExampleInput">City name</label>
+    <div class="form-group">
+      {{ form.city(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+  </form>
+  
+</div>
+
 
 {% endblock %}
