@@ -1,7 +1,15 @@
 from flask import Blueprint, render_template, session, redirect, url_for
-from data import fetch_data, parser, localization
-from operation import operation
-from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm, validate_city_name
+from base.data import parser, localization
+from base.data import fetch_data
+from base.operation import operation
+from .forms import (
+    SearchByCategories,
+    SearchApartmentForm,
+    SearchHouseForm,
+    validate_city_name,
+)
+from base.operation import report
+
 
 views = Blueprint("views", __name__)
 
@@ -15,7 +23,7 @@ def home_view():
             "category": form.category.data,
             "price_min": form.price_min.data,
             "price_max": form.price_max.data,
-            "city": validate_city_name(form.city.data)
+            "city": validate_city_name(form.city.data),
         }
         if category == "1307":
             return redirect(url_for("views.search_apartment_view"))
@@ -112,7 +120,7 @@ def results_view():
             )
 
         d, s, y, f, v, i, u, l = get_result_data(url)
-        print(d[2])
+        print(url)
         return render_template(
             "results.html",
             data_list=d,
@@ -126,3 +134,53 @@ def results_view():
         )
 
     return render_template("results.html")
+
+
+def get_report_data():
+    report_apartment_data = report.ReportApartment().return_report()
+    report_house_data = report.ReportHouse().return_report()
+
+    report_apartment_average_price = (
+        report.ReportApartment().return_weekly_average_price(report_apartment_data)
+    )
+    report_apartment_average_price_per_sqr_m = (
+        report.ReportApartment().return_weekly_average_area_price(report_apartment_data)
+    )
+
+    report_house_average_price = report.ReportHouse().return_weekly_average_price(
+        report_house_data
+    )
+    report_house_average_price_per_sqr_m = (
+        report.ReportHouse().return_weekly_average_area_price(report_house_data)
+    )
+
+    return (
+        report_apartment_data,
+        report_house_data,
+        report_apartment_average_price,
+        report_house_average_price,
+        report_apartment_average_price_per_sqr_m,
+        report_house_average_price_per_sqr_m,
+    )
+
+
+@views.route("/report", methods=["GET", "POST"])
+def report_view():
+    (
+        report_apartment_data,
+        report_house_data,
+        report_apartment_average_price,
+        report_house_average_price,
+        report_apartment_average_price_per_sqr_m,
+        report_house_average_price_per_sqr_m,
+    ) = get_report_data()
+
+    return render_template(
+        "report.html",
+        report_apartment_data=report_apartment_data,
+        report_house_data=report_house_data,
+        report_apartment_average_price=report_apartment_average_price,
+        report_house_average_price=report_house_average_price,
+        report_apartment_average_price_per_sqr_m=report_apartment_average_price_per_sqr_m,
+        report_house_average_price_per_sqr_m=report_house_average_price_per_sqr_m,
+    )

@@ -52,7 +52,6 @@ class UrlBuilderApartment(UrlBuilder):
 
     def build_url(self, **kwargs) -> str:
         parameters = {
-            "category_id": "&category_id={}",
             "build_type": "&filter_enum_builttype%5B0%5D={}",
             "furniture": "&filter_enum_furniture%5B0%5D={}",
             "rooms": "&filter_enum_rooms%5B0%5D={}",

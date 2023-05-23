@@ -1,11 +1,11 @@
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, flash
 
 from web import db
 from .models import User
 from .forms import RegisterForm, DeleteAccountForm, validate_city_name
-from data import fetch_data
-from data import localization
-from .email import send_email
+from base.data import fetch_data, localization
+from base.email import send_email
+from datetime import datetime
 
 auth = Blueprint("auth", __name__)
 
@@ -26,10 +26,15 @@ def register():
             region_id=localization_data.return_localization_data().region_id,
         )
 
-        new_user = User(email=form.email.data, url=url)
+        new_user = User(
+            email=form.email.data,
+            url=url,
+            weekly_report=form.weekly_report.data,
+            date=datetime.utcnow(),
+        )
         db.session.add(new_user)
         db.session.commit()
-        flash("Welcome on the website", category="success")
+        flash("Your account has been created", category="success")
 
         send_email(
             "Thank you for registering on our website",
@@ -50,7 +55,7 @@ def delete_account():
         user = User.query.filter_by(email=form.email.data).first()
 
         send_email(
-            "You account has been deleted",
+            "Your account has been deleted",
             "Visit my GitHub: https://github.com/DEENUU1",
             form.email.data,
         )
