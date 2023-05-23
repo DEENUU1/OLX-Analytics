@@ -15,7 +15,7 @@ def test_convert_datetime_to_date() -> None:
     expected_result = datetime.date(2023, 5, 10)
     assert convert_datetime_to_date("2023-05-10T15:31:26+02:00") == expected_result
 
-def test_parser_data_parser_return_params_data_objects(data_to_parse):
+def test_parser_data_parser_return_params_data_objects(data_to_parse) -> None:
     parser = Parser(data_to_parse)
     params_data_1 = ParamsData(
         key="price_per_m",
@@ -28,6 +28,10 @@ def test_parser_data_parser_return_params_data_objects(data_to_parse):
     assert parser.data_parser()[0].title == "Mieszkanie blok 59m2"
     assert parser.data_parser()[0].region == "Łódzkie"
     assert parser.data_parser()[0].city == "Bełchatów"
+
+def test_parser_data_no_images_in_data(data_to_parse) -> None:
+    parser = Parser(data_to_parse)
+    assert parser.data_parser()[1].photos == []
 
 def test_create_params_data_object() -> None:
     params_data = ParamsData(
