@@ -30,7 +30,7 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        flash("Welcome on the website", category="success")
+        flash("Your account has been created", category="success")
 
         send_email(
             "Thank you for registering on our website",
@@ -51,7 +51,7 @@ def delete_account():
         user = User.query.filter_by(email=form.email.data).first()
 
         send_email(
-            "You account has been deleted",
+            "Your account has been deleted",
             "Visit my GitHub: https://github.com/DEENUU1",
             form.email.data,
         )
