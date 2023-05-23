@@ -27,7 +27,10 @@ def register():
         )
 
         new_user = User(
-            email=form.email.data, url=url, weekly_report=form.weekly_report.data, date=datetime.utcnow()
+            email=form.email.data,
+            url=url,
+            weekly_report=form.weekly_report.data,
+            date=datetime.utcnow(),
         )
         db.session.add(new_user)
         db.session.commit()

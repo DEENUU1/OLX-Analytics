@@ -13,7 +13,7 @@ class Report(ABC):
         pass
 
     @staticmethod
-    def return_weekly_average_price(self, data):
+    def return_weekly_average_price(data):
         """
         Counts average price for given data
         """
@@ -21,12 +21,13 @@ class Report(ABC):
         return round(sum_price / len(data), 2)
 
     @staticmethod
-    def return_weekly_average_area_price(self, data):
+    def return_weekly_average_area_price(data):
         """
         Counts average price for given data
         """
         sum_price = sum(item.average_price_per_sqr_m for item in data)
         return round(sum_price / len(data), 2)
+
 
 class ReportApartment(Report):
     """
@@ -41,7 +42,6 @@ class ReportApartment(Report):
             ApartmentData.date <= current_date,
         ).all()
         return apartment_data
-
 
 
 class ReportHouse(Report):

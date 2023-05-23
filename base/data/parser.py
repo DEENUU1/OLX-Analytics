@@ -23,7 +23,7 @@ class ParseData:
 
     url: str
     title: str
-    created_time: str
+    created_time: datetime.date
     params: List[ParamsData]
     photos: List[str]
     city: str
