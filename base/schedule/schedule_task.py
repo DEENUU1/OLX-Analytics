@@ -1,7 +1,7 @@
 from web.models import User, ApartmentData, HouseData
 from base.data import parser
 from base.data import fetch_data
-from web.email import send_email
+from base.email import send_email
 from web import create_app
 from base.operation import operation
 from web import db
