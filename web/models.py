@@ -10,3 +10,15 @@ class User(db.Model, UserMixin):
     url = db.Column(db.String(250), unique=False)
 
 
+class ApartmentData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    average_price = db.Column(db.Float, unique=False)
+    average_price_per_sqr_m = db.Column(db.Float, unique=False)
+    date = db.Column(db.DateTime, default=datetime.now())
+
+
+class HouseData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    average_price = db.Column(db.Float, unique=False)
+    average_price_per_sqr_m = db.Column(db.Float, unique=False)
+    date = db.Column(db.DateTime, default=datetime.now())
