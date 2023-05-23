@@ -5,7 +5,7 @@ import pytest
 
 @pytest.fixture
 def data_to_parse():
-    with open("base/operation/test/fixtures.json") as f:
+    with open("test/test_base_data/fixtures.json") as f:
         data = json.load(f)
 
 

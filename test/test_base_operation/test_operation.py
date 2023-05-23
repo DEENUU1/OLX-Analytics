@@ -8,7 +8,7 @@ from base.operation import operation
 
 @pytest.fixture
 def offers_test_data():
-    with open("base/operation/test/fixtures.json") as f:
+    with open("test/test_base_operation/fixtures.json") as f:
         data = json.load(f)
 
     parser = Parser(data)
