@@ -35,19 +35,21 @@ def get_param_value(data, key):
                 pass
     return value
 
+
 def return_most_expensive_offer(data_list):
     max_price_object = None
     max_price = 0
 
     for obj in data_list:
         for param in obj.params:
-            if param.key == 'price':
-                price = param.value.replace(' zł', '').replace(' ', '')
+            if param.key == "price":
+                price = param.value.replace(" zł", "").replace(" ", "")
                 if price.isdigit() and int(price) > max_price:
                     max_price = int(price)
                     max_price_object = obj
 
     return max_price_object
+
 
 def return_most_expensive_offer_per_meter(data_list):
     max_price_per_meter = 0
@@ -63,6 +65,7 @@ def return_most_expensive_offer_per_meter(data_list):
 
     return max_price_per_meter_obj
 
+
 def return_offer_largest_area_building(data_list):
     max_area = 0
     max_area_object = None
@@ -75,7 +78,7 @@ def return_offer_largest_area_building(data_list):
                 if area > max_area:
                     max_area = area
                     max_area_object = data
-                break  
+                break
 
     return max_area_object
 
