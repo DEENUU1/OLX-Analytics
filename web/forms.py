@@ -1,5 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, EmailField, TextAreaField, BooleanField
+from wtforms import (
+    StringField,
+    SubmitField,
+    SelectField,
+    EmailField,
+    TextAreaField,
+    BooleanField,
+)
 from wtforms.validators import InputRequired, Length, ValidationError
 from .models import User
 from unidecode import unidecode
@@ -12,6 +19,7 @@ def validate_city_name(city):
     if len(city_count_words) == 1:
         return city_clear_polish_char
     return "-".join(city_count_words)
+
 
 class SearchByCategories(FlaskForm):
     CATEGORIES = [("1307", "Apartments"), ("1309", "Houses")]
@@ -28,7 +36,12 @@ class SearchByCategories(FlaskForm):
     category = SelectField("Category", choices=CATEGORIES)
     price_min = SelectField("Price min", choices=PRICE_VALUES)
     price_max = SelectField("Price max", choices=PRICE_VALUES)
-    city = StringField("City", validators=[InputRequired()], default=None, render_kw={"placeholder": "City name"})
+    city = StringField(
+        "City",
+        validators=[InputRequired()],
+        default=None,
+        render_kw={"placeholder": "City name"},
+    )
 
 
 class SearchApartmentForm(FlaskForm):

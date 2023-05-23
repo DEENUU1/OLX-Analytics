@@ -25,7 +25,9 @@ def register():
             region_id=localization_data.return_localization_data().region_id,
         )
 
-        new_user = User(email=form.email.data, url=url, weekly_report=form.weekly_report.data)
+        new_user = User(
+            email=form.email.data, url=url, weekly_report=form.weekly_report.data
+        )
         db.session.add(new_user)
         db.session.commit()
         flash("Welcome on the website", category="success")

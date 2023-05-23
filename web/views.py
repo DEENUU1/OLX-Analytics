@@ -2,7 +2,12 @@ from flask import Blueprint, render_template, session, redirect, url_for
 from base.data import parser, localization
 from base.data import fetch_data
 from base.operation import operation
-from .forms import SearchByCategories, SearchApartmentForm, SearchHouseForm, validate_city_name
+from .forms import (
+    SearchByCategories,
+    SearchApartmentForm,
+    SearchHouseForm,
+    validate_city_name,
+)
 
 views = Blueprint("views", __name__)
 
@@ -10,13 +15,14 @@ views = Blueprint("views", __name__)
 @views.route("/", methods=["GET", "POST"])
 def home_view():
     form = SearchByCategories()
+    print(operation.return_weekly_average_prices())
     if form.validate_on_submit():
         category = form.category.data
         session["category_data"] = {
             "category": form.category.data,
             "price_min": form.price_min.data,
             "price_max": form.price_max.data,
-            "city": validate_city_name(form.city.data)
+            "city": validate_city_name(form.city.data),
         }
         if category == "1307":
             return redirect(url_for("views.search_apartment_view"))

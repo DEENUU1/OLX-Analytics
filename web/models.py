@@ -10,6 +10,7 @@ class User(db.Model, UserMixin):
     url = db.Column(db.String(250), unique=False)
     weekly_report = db.Column(db.Boolean, default=False)
 
+
 class ApartmentData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     average_price = db.Column(db.Float, unique=False)

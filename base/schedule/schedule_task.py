@@ -1,4 +1,3 @@
-from abc import ABC
 from web.models import User, ApartmentData, HouseData
 from base.data import parser
 from base.data import fetch_data
@@ -7,6 +6,8 @@ from web import create_app
 from base.operation import operation
 from web import db
 from datetime import datetime
+from base.operation import report
+
 
 def send_newest_offers():
     with create_app().app_context():
@@ -42,6 +43,7 @@ def schedule_report():
 
     return apartments_data, houses_data
 
+
 def process_data(url, parse_apartments):
     data = parser.Parser(fetch_data.FetchData(url).fetch_data()).data_parser()
     average_price = operation.return_average_price(data)
@@ -52,11 +54,45 @@ def process_data(url, parse_apartments):
         return ApartmentData(
             average_price=average_price,
             average_price_per_sqr_m=average_price_per_sqr_m,
-            date=datetime_now
+            date=datetime_now,
         )
     else:
         return HouseData(
             average_price=average_price,
             average_price_per_sqr_m=average_price_per_sqr_m,
-            date=datetime_now  
+            date=datetime_now,
         )
+
+
+def send_weekly_reports_to_users():
+    with create_app().app_context():
+        users = User.query.filter(User.weekly_report == 1).all()
+        send_email_objs = []
+
+        for user in users:
+            report_apartment = report.ReportApartment().return_report()
+            report_house = report.ReportHouse().return_report()
+
+            report_apartment_str = stringify_report(report_apartment)
+            report_house_str = stringify_report(report_house)
+
+            email_content = f"Raport dla apartamentów:\n{report_apartment_str}\n\nRaport dla domów:\n{report_house_str}"
+
+            send_email_obj = send_email(
+                "Tygodniowe podsumowanie", email_content, user.email
+            )
+            send_email_objs.append(send_email_obj)
+
+        return send_email_objs
+
+
+def stringify_report(report):
+    report_str = ""
+    for data in report:
+        report_str += f"Średnia cena: {data.average_price}\n"
+        report_str += (
+            f"Średnia cena za metr kwadratowy: {data.average_price_per_sqr_m}\n"
+        )
+        report_str += f"Data: {data.date}\n\n"
+
+    return report_str
