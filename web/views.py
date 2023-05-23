@@ -144,10 +144,15 @@ def report_view():
     report_apartment_average_price = report.ReportApartment().return_weekly_average_price(report_apartment_data)
     report_house_average_price = report.ReportHouse().return_weekly_average_price(report_house_data)
 
+    report_apartment_average_price_per_sqr_m = report.ReportApartment().return_weekly_average_area_price(report_apartment_data)
+    report_house_average_price_per_sqr_m = report.ReportHouse().return_weekly_average_area_price(report_house_data)
+
     return render_template("report.html",
                            report_apartment_data=report_apartment_data,
                            report_house_data=report_house_data,
                            report_apartment_average_price=report_apartment_average_price,
-                           report_house_average_price=report_house_average_price
+                           report_house_average_price=report_house_average_price,
+                           report_apartment_average_price_per_sqr_m=report_apartment_average_price_per_sqr_m,
+                           report_house_average_price_per_sqr_m=report_house_average_price_per_sqr_m
                            )
 
