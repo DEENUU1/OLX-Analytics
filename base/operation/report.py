@@ -8,31 +8,25 @@ class Report(ABC):
     Abstract class for creating weekly reports
     """
 
-    current_date = datetime.now()
-    start_date = current_date - timedelta(days=7)
-
     @abstractmethod
     def return_report(self):
         pass
 
+    @staticmethod
     def return_weekly_average_price(self, data):
         """
         Counts average price for given data
         """
-        sum_price = 0
-        for item in data:
-            sum_price += item.average_price
+        sum_price = sum(item.average_price for item in data)
         return round(sum_price / len(data), 2)
 
+    @staticmethod
     def return_weekly_average_area_price(self, data):
         """
         Counts average price for given data
         """
-        sum_price = 0
-        for item in data:
-            sum_price += item.average_price_per_sqr_m
+        sum_price = sum(item.average_price_per_sqr_m for item in data)
         return round(sum_price / len(data), 2)
-
 
 class ReportApartment(Report):
     """
@@ -40,11 +34,14 @@ class ReportApartment(Report):
     """
 
     def return_report(self):
+        current_date = datetime.now()
+        start_date = current_date - timedelta(days=7)
         apartment_data = ApartmentData.query.filter(
-            ApartmentData.date >= self.start_date,
-            ApartmentData.date <= self.current_date,
+            ApartmentData.date >= start_date,
+            ApartmentData.date <= current_date,
         ).all()
         return apartment_data
+
 
 
 class ReportHouse(Report):
@@ -53,7 +50,9 @@ class ReportHouse(Report):
     """
 
     def return_report(self):
+        current_date = datetime.now()
+        start_date = current_date - timedelta(days=7)
         house_data = HouseData.query.filter(
-            HouseData.date >= self.start_date, HouseData.date <= self.current_date
+            HouseData.date >= start_date, HouseData.date <= current_date
         ).all()
         return house_data
