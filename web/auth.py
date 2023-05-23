@@ -4,7 +4,7 @@ from web import db
 from .models import User
 from .forms import RegisterForm, DeleteAccountForm, validate_city_name
 from base.data import fetch_data, localization
-from .email import send_email
+from base.email import send_email
 
 auth = Blueprint("auth", __name__)
 
