@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, SelectField, EmailField, TextAreaField
+from wtforms import StringField, SubmitField, SelectField, EmailField, TextAreaField, BooleanField
 from wtforms.validators import InputRequired, Length, ValidationError
 from .models import User
 from unidecode import unidecode
@@ -108,6 +108,7 @@ class RegisterForm(FlaskForm):
     city = StringField(
         validators=[InputRequired()], render_kw={"placeholder": "City name"}
     )
+    weekly_report = BooleanField("Send me weekly report", default=False)
 
     def validate_email(self, email):
         """This method is checking if email already exist in database"""

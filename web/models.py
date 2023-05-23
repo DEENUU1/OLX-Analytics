@@ -8,7 +8,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(30), unique=True)
     url = db.Column(db.String(250), unique=False)
-
+    weekly_report = db.Column(db.Boolean, default=False)
 
 class ApartmentData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
