@@ -120,7 +120,7 @@ def results_view():
             )
 
         d, s, y, f, v, i, u, l = get_result_data(url)
-
+        print(url)
         return render_template(
             "results.html",
             data_list=d,

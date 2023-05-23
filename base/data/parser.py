@@ -64,10 +64,10 @@ class Parser:
             parsed_params = self.parse_params(params)
 
             photos_url = []
+
             for photo in object["photos"]:
-                photos_url.append(photo["link"][:-19])
-            if not photos_url:
-                photos_url.append("")
+                if photo:
+                    photos_url.append(photo["link"][:-19])
 
             parsed_data = ParseData(
                 url=url,
