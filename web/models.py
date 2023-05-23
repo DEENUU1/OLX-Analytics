@@ -9,6 +9,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(30), unique=True)
     url = db.Column(db.String(250), unique=False)
     weekly_report = db.Column(db.Boolean, default=False)
+    date = db.Column(db.DateTime, default=datetime.now())
 
 
 class ApartmentData(db.Model):

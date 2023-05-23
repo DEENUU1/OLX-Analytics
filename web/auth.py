@@ -5,6 +5,7 @@ from .models import User
 from .forms import RegisterForm, DeleteAccountForm, validate_city_name
 from base.data import fetch_data, localization
 from base.email import send_email
+from datetime import datetime
 
 auth = Blueprint("auth", __name__)
 
@@ -26,7 +27,7 @@ def register():
         )
 
         new_user = User(
-            email=form.email.data, url=url, weekly_report=form.weekly_report.data
+            email=form.email.data, url=url, weekly_report=form.weekly_report.data, date=datetime.utcnow()
         )
         db.session.add(new_user)
         db.session.commit()
