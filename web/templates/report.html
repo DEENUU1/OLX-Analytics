@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}OLX Analitics | Report {% endblock %}
+
+{% block style %}
+  <link rel="stylesheet" type="text/css" href="/static/css/forms.css" />
+{% endblock %}
+
+
+{% block content %}
+
+{{report_apartment_average_price}} <br>
+{{report_house_average_price}} <br>
+<br>
+
+{% for data in report_apartment_data %}
+    {{data.date}} <br>
+    {{data.average_price}} <br>
+    {{data.average_price_per_sqrt_m}} <br>
+{% endfor %}
+
+<br>
+{% for data in report_house_data %}
+    {{data.date}} <br>
+    {{data.average_price}} <br>
+    {{data.average_price_per_sqr_m}} <br>
+{% endfor %}
+
+
+
+
+{% endblock %}

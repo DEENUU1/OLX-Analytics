@@ -15,6 +15,15 @@ class Report(ABC):
     def return_report(self):
         pass
 
+    def return_weekly_average_price(self, data):
+        """
+        Counts average price for given data
+        """
+        sum_price = 0
+        for item in data:
+            sum_price += item.average_price
+        return round(sum_price / len(data), 2)
+
 
 class ReportApartment(Report):
     """

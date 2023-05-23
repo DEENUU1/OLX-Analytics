@@ -12,5 +12,5 @@ if __name__ == "__main__":
     scheduler.add_job(id='job3', func=send_weekly_reports_to_users, trigger='interval', days=7)
     scheduler.start()
     app = create_app()
-    app.run(debug=True, host="0.0.0.0", port=5000, use_reloader=False)
+    app.run(debug=True, host="0.0.0.0", port=5000)
     

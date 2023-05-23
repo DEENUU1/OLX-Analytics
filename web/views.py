@@ -8,6 +8,8 @@ from .forms import (
     SearchHouseForm,
     validate_city_name,
 )
+from base.operation import report
+
 
 views = Blueprint("views", __name__)
 
@@ -15,7 +17,6 @@ views = Blueprint("views", __name__)
 @views.route("/", methods=["GET", "POST"])
 def home_view():
     form = SearchByCategories()
-    print(operation.return_weekly_average_prices())
     if form.validate_on_submit():
         category = form.category.data
         session["category_data"] = {
@@ -133,3 +134,20 @@ def results_view():
         )
 
     return render_template("results.html")
+
+
+@views.route("/report", methods=["GET", "POST"])
+def report_view():
+    report_apartment_data = report.ReportApartment().return_report()
+    report_house_data = report.ReportHouse().return_report()
+
+    report_apartment_average_price = report.ReportApartment().return_weekly_average_price(report_apartment_data)
+    report_house_average_price = report.ReportHouse().return_weekly_average_price(report_house_data)
+
+    return render_template("report.html",
+                           report_apartment_data=report_apartment_data,
+                           report_house_data=report_house_data,
+                           report_apartment_average_price=report_apartment_average_price,
+                           report_house_average_price=report_house_average_price
+                           )
+
