@@ -1,4 +1,4 @@
-from web.models import ApartmentData, HouseData
+from web.models import ApartmentData
 from base.operation.report import Report, ReportApartment, ReportHouse
 from test.test_app_config import populated_database, app, client
 

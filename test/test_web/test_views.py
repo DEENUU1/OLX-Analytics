@@ -1,23 +1,4 @@
-import pytest
-from web import create_app
-
-
-@pytest.fixture()
-def app():
-    app = create_app()
-    app.config.update({"TESTING": True, "SECRET_KEY": "testsecretkey"})
-
-    yield app
-
-
-@pytest.fixture()
-def client(app):
-    return app.test_client()
-
-
-@pytest.fixture()
-def runner(app):
-    return app.test_cli_runner()
+from test.test_app_config import client, app
 
 
 def test_home_view_get_method_returns_200_status_code(client):
