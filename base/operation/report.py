@@ -18,7 +18,10 @@ class Report(ABC):
         Counts average price for given data
         """
         sum_price = sum(item.average_price for item in data)
-        return round(sum_price / len(data), 2)
+        try:
+            return round(sum_price / len(data), 2)
+        except ZeroDivisionError:
+            return 0.0
 
     @staticmethod
     def return_weekly_average_area_price(data):
@@ -26,7 +29,10 @@ class Report(ABC):
         Counts average price for given data
         """
         sum_price = sum(item.average_price_per_sqr_m for item in data)
-        return round(sum_price / len(data), 2)
+        try:
+            return round(sum_price / len(data), 2)
+        except ZeroDivisionError:
+            return 0.0
 
 
 class ReportApartment(Report):

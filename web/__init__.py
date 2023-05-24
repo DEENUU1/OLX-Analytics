@@ -6,9 +6,6 @@ from flask_login import LoginManager, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_migrate import Migrate
-import schedule
-from datetime import time, timedelta, datetime
-
 
 load_dotenv()
 
