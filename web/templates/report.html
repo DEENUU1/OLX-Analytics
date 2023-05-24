@@ -3,31 +3,86 @@
 {% block title %}OLX Analitics | Report {% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" type="text/css" href="/static/css/forms.css" />
+  <link rel="stylesheet" type="text/css" href="/static/css/result.css" />
 {% endblock %}
 
 
 {% block content %}
 
-{{report_apartment_average_price}} <br>
-{{report_house_average_price}} <br>
-{{report_apartment_average_price_per_sqr_m}} <br>
-{{report_house_average_price_per_sqr_m}} <br>
-<br>
+<div class="container">
+    {% if report_apartment_average_price %}
+    <div class="box">
+        <h3>Average price of apartment (from last 7 days) {{report_apartment_average_price}} PLN</h3>
+    </div>
+    {% endif %}
 
-{% for data in report_apartment_data %}
-    {{data.date}} <br>
-    {{data.average_price}} <br>
-    {{data.average_price_per_sqrt_m}} <br>
-{% endfor %}
+    {% if report_house_average_price %}
+    <div class="box">
+        <h3>Average price of houses (from last 7 days) {{report_house_average_price}} PLN</h3>
+    </div>
+    {% endif %}
 
-<br>
-{% for data in report_house_data %}
-    {{data.date}} <br>
-    {{data.average_price}} <br>
-    {{data.average_price_per_sqr_m}} <br>
-{% endfor %}
+    {% if report_apartment_average_price_per_sqr_m %}
+    <div class="box">
+        <h3>Average price per sqrt meter of apartment (from last 7 days) {{report_apartment_average_price_per_sqr_m}} PLN</h3>
+    </div>
+    {% endif %}
 
+    {% if report_house_average_price_per_sqr_m  %}
+    <div class="box">
+        <h3>Average price per sqrt meter of houses (from last 7 days) {{report_house_average_price_per_sqr_m}} PLN</h3>
+    </div>
+    {% endif %}
+</div>
+
+{% if report_apartment_data %}
+<div class="container table-responsive">
+<h2>Average prices for apartment in last 7 days</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Average price</th>
+            <th scope="col">Average price per sqrt meter</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in report_apartment_data %}
+    <tr>
+        <th>{{data.date}}</th>
+        <th>{{data.average_price}} PLN</th>
+        <th>{{data.average_price_per_sqr_m}} PLN</th>
+    </tr>
+    </tbody>
+    {% endfor %}
+</table>
+</div>
+{% endif %}
+
+
+{% if report_house_data %}
+<div class="container table-responsive">
+<h2>Average prices for houses in last 7 days</h2>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Average price</th>
+            <th scope="col">Average price per sqrt meter</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for data in report_house_data %}
+    <tr>
+        <th>{{data.date}}</th>
+        <th>{{data.average_price}} PLN</th>
+        <th>{{data.average_price_per_sqr_m}} PLN</th>
+    </tr>
+    </tbody>
+    {% endfor %}
+</table>
+</div>
+{% endif %}
 
 
 

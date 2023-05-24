@@ -1,6 +1,6 @@
 name: Run Tests
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -20,4 +20,9 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run pytest
-        run: pytest
+        run: |
+          coverage run -m pytest
+          coverage report -m
+
+      - name: Publish code coverage
+        uses: codecov/codecov-action@v2
