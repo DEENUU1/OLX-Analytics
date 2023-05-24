@@ -13,17 +13,21 @@ auth = Blueprint("auth", __name__)
 @auth.route("/register", methods=["POST", "GET"])
 def register():
     form = RegisterForm()
-    localization_data = localization.Localization(validate_city_name(form.city.data))
 
     if form.validate_on_submit():
+        localization_data = localization.Localization(validate_city_name(form.city.data)).return_localization_data()
+        if localization_data is None:
+            flash("City not found", category="error")
+            return redirect(url_for("auth.register"))
+
         if form.category.data == "1307":
             url_builder = fetch_data.UrlBuilderApartment()
         else:
             url_builder = fetch_data.UrlBuilderHouse()
 
         url = url_builder.build_url(
-            city_id=localization_data.return_localization_data().city_id,
-            region_id=localization_data.return_localization_data().region_id,
+            city_id=localization_data.city_id,
+            region_id=localization_data.region_id,
         )
 
         new_user = User(
@@ -44,7 +48,7 @@ def register():
 
         return redirect(url_for("views.home_view"))
 
-    return render_template("auth/register.html", form=form)
+    return render_template("auth/register.html", form=form, email_error=form.errors.get("email"))
 
 
 @auth.route("/delete", methods=["POST", "GET"])
@@ -67,4 +71,4 @@ def delete_account():
 
         return redirect(url_for("views.home_view"))
 
-    return render_template("auth/delete_account.html", form=form)
+    return render_template("auth/delete_account.html", form=form, email_error=form.errors.get("email"))
