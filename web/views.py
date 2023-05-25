@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, session, redirect, url_for, flash
+from flask import Blueprint, render_template, session, redirect, url_for, flash, send_file
 from base.data import parser, localization
 from base.data import fetch_data
-from base.operation import operation
+from base.operation import operation, save_data
 from .forms import (
     SearchByCategories,
     SearchApartmentForm,
@@ -86,7 +86,6 @@ def get_result_data(url):
     i = operation.return_most_expensive_offer_per_meter(d)
     u = operation.return_offer_largest_area_building(d)
     l = operation.return_offer_largest_area_plot(d)
-
     return d, s, y, f, v, i, u, l
 
 

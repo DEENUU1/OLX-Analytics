@@ -3,6 +3,6 @@ from typing import List
 from base.data.parser import ParseData
 
 
-def save_to_excel(data: List[ParseData], file_path: str):
+def save_to_excel(data: List[ParseData]):
     df = pd.DataFrame(data=data)
-    df.to_excel(file_path, index=False)
+    df.to_excel('olx-analytics.xlsx',index=False)
