@@ -1,12 +1,10 @@
-from web.models import User, ApartmentData, HouseData
-from base.data import parser
-from base.data import fetch_data
-from base.email import send_email
-from web import create_app
-from base.operation import operation
-from web import db
 from datetime import datetime
-from base.operation import report
+
+from base.data import fetch_data, parser
+from base.email import send_email
+from base.operation import operation, report
+from web import create_app, db
+from web.models import ApartmentData, HouseData, User
 
 
 def send_newest_offers():

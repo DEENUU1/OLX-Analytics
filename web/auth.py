@@ -1,21 +1,25 @@
-from flask import Blueprint, render_template, redirect, url_for, flash
+from datetime import datetime
 
-from web import db
-from .models import User
-from .forms import RegisterForm, DeleteAccountForm, validate_city_name
+from flask import Blueprint, Response, flash, redirect, render_template, url_for
+
 from base.data import fetch_data, localization
 from base.email import send_email
-from datetime import datetime
+from web import db
+
+from .forms import DeleteAccountForm, RegisterForm, validate_city_name
+from .models import User
 
 auth = Blueprint("auth", __name__)
 
 
 @auth.route("/register", methods=["POST", "GET"])
-def register():
+def register() -> Response | str:
     form = RegisterForm()
 
     if form.validate_on_submit():
-        localization_data = localization.Localization(validate_city_name(form.city.data)).return_localization_data()
+        localization_data = localization.Localization(
+            validate_city_name(form.city.data)
+        ).return_localization_data()
         if localization_data is None:
             flash("City not found", category="error")
             return redirect(url_for("auth.register"))
@@ -48,11 +52,13 @@ def register():
 
         return redirect(url_for("views.home_view"))
 
-    return render_template("auth/register.html", form=form, email_error=form.errors.get("email"))
+    return render_template(
+        "auth/register.html", form=form, email_error=form.errors.get("email")
+    )
 
 
 @auth.route("/delete", methods=["POST", "GET"])
-def delete_account():
+def delete_account() -> Response | str:
     form = DeleteAccountForm()
 
     if form.validate_on_submit():
@@ -71,4 +77,6 @@ def delete_account():
 
         return redirect(url_for("views.home_view"))
 
-    return render_template("auth/delete_account.html", form=form, email_error=form.errors.get("email"))
+    return render_template(
+        "auth/delete_account.html", form=form, email_error=form.errors.get("email")
+    )

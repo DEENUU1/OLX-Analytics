@@ -1,6 +1,7 @@
 import json
-from requests import get
 from dataclasses import dataclass
+
+from requests import get
 
 
 @dataclass
@@ -25,13 +26,16 @@ class Localization:
             f"https://www.olx.pl/api/v1/friendly-links/query-params/{self.city_name}"
         )
 
-    def get_localization_data(self):
+    def get_localization_data(self) -> dict | None:
         response = get(self.base_url)
         if response.status_code != 200:
             return None
         return json.loads(response.content)
 
-    def return_localization_data(self):
+    def return_localization_data(self) -> LocalizationData | None:
+        """
+        Returning localization data
+        """
         data = self.get_localization_data()
         if data:
             return LocalizationData(

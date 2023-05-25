@@ -1,6 +1,7 @@
 import json
-from requests import get
 from abc import ABC, abstractmethod
+
+from requests import get
 
 
 class FetchData:

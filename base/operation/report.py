@@ -1,6 +1,8 @@
-from web.models import ApartmentData, HouseData
-from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
+from datetime import datetime, timedelta
+from typing import Any
+
+from web.models import ApartmentData, HouseData
 
 
 class Report(ABC):
@@ -13,7 +15,7 @@ class Report(ABC):
         pass
 
     @staticmethod
-    def return_weekly_average_price(data):
+    def return_weekly_average_price(data) -> float:
         """
         Counts average price for given data
         """
@@ -24,7 +26,7 @@ class Report(ABC):
             return 0.0
 
     @staticmethod
-    def return_weekly_average_area_price(data):
+    def return_weekly_average_area_price(data) -> float:
         """
         Counts average price for given data
         """
@@ -40,7 +42,7 @@ class ReportApartment(Report):
     Implementation of abstract class for creating weekly reports for apartments
     """
 
-    def return_report(self):
+    def return_report(self) -> Any:
         current_date = datetime.now()
         start_date = current_date - timedelta(days=7)
         apartment_data = ApartmentData.query.filter(
@@ -55,7 +57,7 @@ class ReportHouse(Report):
     Implementation of abstract class for creating weekly reports for houses
     """
 
-    def return_report(self):
+    def return_report(self) -> Any:
         current_date = datetime.now()
         start_date = current_date - timedelta(days=7)
         house_data = HouseData.query.filter(

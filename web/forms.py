@@ -1,17 +1,14 @@
+from typing import Any
+
 from flask_wtf import FlaskForm
-from wtforms import (
-    StringField,
-    SelectField,
-    EmailField,
-    BooleanField,
-)
-from wtforms.validators import InputRequired, ValidationError
-from .models import User
 from unidecode import unidecode
-from flask import flash
+from wtforms import BooleanField, EmailField, SelectField, StringField
+from wtforms.validators import InputRequired, ValidationError
+
+from .models import User
 
 
-def validate_city_name(city):
+def validate_city_name(city: Any) -> str:
     city_clear_polish_char = unidecode(str(city))
     city_count_words = city_clear_polish_char.split()
 
@@ -122,7 +119,7 @@ class RegisterForm(FlaskForm):
     )
     weekly_report = BooleanField("Send me weekly report", default=False)
 
-    def validate_email(self, email):
+    def validate_email(self, email) -> Any:
         """This method is checking if email already exist in database"""
         existing_user_email = User.query.filter_by(email=email.data).first()
         if existing_user_email:
@@ -134,7 +131,7 @@ class RegisterForm(FlaskForm):
 class DeleteAccountForm(FlaskForm):
     email = EmailField(validators=[InputRequired()], render_kw={"placeholder": "Email"})
 
-    def validate_email(self, email):
+    def validate_email(self, email) -> Any:
         """This method is checking if email already exist in database"""
         existing_user_email = User.query.filter_by(email=email.data).first()
         if not existing_user_email:
