@@ -1,7 +1,7 @@
-from flask import Blueprint, render_template, session, redirect, url_for
+from flask import Blueprint, render_template, session, redirect, url_for, flash, send_file
 from base.data import parser, localization
 from base.data import fetch_data
-from base.operation import operation
+from base.operation import operation, save_data
 from .forms import (
     SearchByCategories,
     SearchApartmentForm,
@@ -23,12 +23,15 @@ def home_view():
             "category": form.category.data,
             "price_min": form.price_min.data,
             "price_max": form.price_max.data,
-            "city": validate_city_name(form.city.data),
         }
-        if category == "1307":
-            return redirect(url_for("views.search_apartment_view"))
-        elif category == "1309":
-            return redirect(url_for("views.search_house_view"))
+        check_city = localization.Localization(validate_city_name(form.city.data)).return_localization_data()
+        if check_city:
+            session['city_data'] = {'city': validate_city_name(form.city.data)}
+            if category == "1307":
+                return redirect(url_for("views.search_apartment_view"))
+            elif category == "1309":
+                return redirect(url_for("views.search_house_view"))
+        flash("City not found", category="error")
 
     return render_template("home.html", form=form)
 
@@ -83,20 +86,20 @@ def get_result_data(url):
     i = operation.return_most_expensive_offer_per_meter(d)
     u = operation.return_offer_largest_area_building(d)
     l = operation.return_offer_largest_area_plot(d)
-
     return d, s, y, f, v, i, u, l
 
 
 @views.route("/results", methods=["GET", "POST"])
 def results_view():
     category_data = session.get("category_data")
+    city_data = session.get("city_data")
 
-    if category_data:
+    if category_data and city_data:
         category = category_data["category"]
-
+        city = city_data["city"]
         if category == "1307":
             apartment_data = session.get("apartment_data")
-            localization_data = localization.Localization(category_data["city"])
+            localization_data = localization.Localization(city)
             url = fetch_data.UrlBuilderApartment().build_url(
                 build_type=apartment_data["build_type"],
                 furrooms=apartment_data["rooms"],
@@ -120,7 +123,7 @@ def results_view():
             )
 
         d, s, y, f, v, i, u, l = get_result_data(url)
-        print(url)
+
         return render_template(
             "results.html",
             data_list=d,

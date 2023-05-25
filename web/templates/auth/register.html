@@ -3,7 +3,6 @@
 {% block title %}OLX Analitics | Register{% endblock %}
 
 {% block style %}
-  <link rel="stylesheet" type="text/css" href="/static/css/result.css" />
 {% endblock %}
 
 
@@ -29,6 +28,9 @@
                     <div class="form-outline flex-fill mb-0">
                       <label class="form-label" for="form3Example3c">Your Email</label>
                       {{form.email(class="form-control")}}
+                      {% if email_error %}
+                      <div style="color: red">This email already exists!</div>
+                      {% endif %}
                     </div>
                   </div>
       

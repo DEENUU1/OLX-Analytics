@@ -10,27 +10,71 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container py-3">
+  <div class="row">
     {% if average_price %}
-    <div class="box">
-        <h3>Average price {{average_price}} PLN</h3>
+    <div class="col-md-6">
+      <div class="card" style="border-radius: 20px; border: 4px solid;">
+        <div class="card-body p-3">
+          <div class="d-flex">
+            <h6 class="flex-grow-1">Average price</h6>
+          </div>
+          <div class="d-flex flex-column text-center mt-2 mb-2">
+            <h6 class="display-4 mb-0 font-weight-bold">{{average_price}}</h6>
+            <span class="small" style="color: #868B94">PLN</span>
+          </div>
+        </div>
+      </div>
     </div>
     {% endif %}
     {% if average_price_per_meter %}
-    <div class="box">
-        <h3>Average price per meter {{average_price_per_meter}} PLN</h3>
+    <div class="col-md-6">
+      <div class="card" style="border-radius: 20px; border: 4px solid;">
+        <div class="card-body p-3">
+          <div class="d-flex">
+            <h6 class="flex-grow-1">Average price per meter</h6>
+          </div>
+          <div class="d-flex flex-column text-center mt-2 mb-2">
+            <h6 class="display-4 mb-0 font-weight-bold">{{average_price_per_meter}}</h6>
+            <span class="small" style="color: #868B94">PLN</span>
+          </div>
+        </div>
+      </div>
     </div>
     {% endif %}
+  </div>
 </div>
 
 
-{% if largest_area_plot %}
-<div class="container table-responsive">
+<!-- COLLAPSE BUTTONS -->
+<div class="container">
     <div class="box">
     <p>
         <a id="collapse-link" data-bs-toggle="collapse" href="#largest_area_plot" aria-expanded="false" aria-controls="collapseExample"> <h3>Offer with the largest area of plot</h3> </a>
     </p>
     </div>
+    <div class="box">
+        <p>
+            <a id="collapse-link" data-bs-toggle="collapse" href="#largest_area_building" aria-expanded="false" aria-controls="collapseExample"> <h3>Offer with the largest area of building</h3>
+            </a>
+        </p>
+    </div>
+    <div class="box">
+        <p>
+            <a id="collapse-link" data-bs-toggle="collapse" href="#most_expensive_offer" aria-expanded="false" aria-controls="collapseExample"> <h3>Most expensive offer </h3>
+            </a>
+        </p>
+    </div>
+    <div class="box">
+    <p>
+        <a id="collapse-link" data-bs-toggle="collapse" href="#most_expensive_offer_per_meter" aria-expanded="false" aria-controls="collapseExample"> <h3> Most expensive offer per meter^2 </h3>
+        </a>
+    </p>
+    </div>
+</div>
+
+{% if largest_area_plot %}
+<div class="container table-responsive">
     <div class="collapse" id="largest_area_plot">
         <div class="card card-body">  
             <table class="table table-hover">
@@ -70,19 +114,11 @@
         </div>
     </div>
 </div>
-{% else %}
-There is no data 
 {% endif %}
 
 
 {% if largest_area_building %}
 <div class="container table-responsive">
-    <div class="box">
-        <p>
-            <a id="collapse-link" data-bs-toggle="collapse" href="#largest_area_building" aria-expanded="false" aria-controls="collapseExample"> <h3>Offer with the largest area of building</h3>
-            </a>
-        </p>
-    </div>    
     <div class="collapse" id="largest_area_building">
         <div class="card card-body">  
             <table class="table table-hover">
@@ -122,18 +158,11 @@ There is no data
         </div>
     </div>
 </div>
-
 {% endif %}
 
 
 {% if most_expensive_offer %}
 <div class="container table-responsive">
-    <div class="box">
-        <p>
-            <a id="collapse-link" data-bs-toggle="collapse" href="#most_expensive_offer" aria-expanded="false" aria-controls="collapseExample"> <h3>Most expensive offer </h3>
-            </a>
-        </p>
-    </div>
     <div class="collapse" id="most_expensive_offer">
         <div class="card card-body">  
             <table class="table table-hover">
@@ -173,19 +202,10 @@ There is no data
         </div>
     </div>
 </div>
-{% else %}
-There is no data 
 {% endif %}
-
 
 {% if most_expensive_offer_per_meter %}
 <div class="container table-responsive">
-    <div class="box">
-    <p>
-        <a id="collapse-link" data-bs-toggle="collapse" href="#most_expensive_offer_per_meter" aria-expanded="false" aria-controls="collapseExample"> <h3> Most expensive offer per meter^2 </h3>
-        </a>
-    </p>
-    </div>
     <div class="collapse" id="most_expensive_offer_per_meter">
         <div class="card card-body">  
             <table class="table table-hover">
@@ -225,8 +245,6 @@ There is no data
         </div>
     </div>
 </div>
-{% else %}
-There is no data 
 {% endif %}
 
 
@@ -271,14 +289,12 @@ There is no data
     {% endfor %}
 </table>
 </div>
-{% else %}
-There is no data 
 {% endif %}
 
 {% if data_list %}
 <div class="container table-responsive">
 <h2>All offers</h2>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Image</th>
@@ -315,8 +331,5 @@ There is no data
     {% endfor %}
 </table>
 </div>
-{% else %}
-There is no data 
 {% endif %}
-
 {% endblock %}

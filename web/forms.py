@@ -1,15 +1,14 @@
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField,
-    SubmitField,
     SelectField,
     EmailField,
-    TextAreaField,
     BooleanField,
 )
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms.validators import InputRequired, ValidationError
 from .models import User
 from unidecode import unidecode
+from flask import flash
 
 
 def validate_city_name(city):
