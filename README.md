@@ -18,6 +18,8 @@
     Get your dream job in just a few clicks!
     <br />
     <br />
+    <a href="http://18.194.184.98:5000/">Online demo</a>
+    ·
     <a href="https://github.com/DEENUU1/OLX-Analytics/issues">Report Bug</a>
     ·
     <a href="https://github.com/DEENUU1/OLX-Analytics/issues">Request Feature</a>
@@ -50,21 +52,16 @@
     <li><a href="#author">Author</a></li>
   </ol>
 
-<img src="images/home.png" alt="home">
-<img src="images/search.png" alt="search">
-<img src="images/result.png" alt="result">
-<img src="images/result2.png" alt="result-2">
-<img src="images/register.png" alt="register">
-<img src="images/report.png" alt="report">
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project allows easy and efficient browsing of classifieds on the OLX portal. The user has the option to register for a subscription and receive the latest information from the category that interests him every 4 hours.
-This is a significant advantage compared to the OLX portal because it only sends such data once a day
-In addition, it is possible to receive weekly reports if the user agrees.
-The website additionally includes data from reports (average price in the last 7 days) and filtering ads.
+- This project allows easy and efficient browsing of classifieds on the OLX portal. 
+
+- The user has the option to register for a subscription and receive the latest information from the category that interests him every 4 hours. 
+
+- This is a significant advantage compared to the OLX portal because it only sends such data once a day In addition, it is possible to receive weekly reports if the user agrees. 
+
+- The website also displays data from reports (average price in the last 7 days) and allows to filtering ads.
 
 ### Built With
 - Python
@@ -89,6 +86,15 @@ The website additionally includes data from reports (average price in the last 7
   - Sending newest offers every 4 hours
   - Registration to get email reports
   - Deleting a subscription
+
+
+<img src="images/home.png" alt="home">
+<img src="images/search.png" alt="search">
+<img src="images/result.png" alt="result">
+<img src="images/result2.png" alt="result-2">
+<img src="images/register.png" alt="register">
+<img src="images/report.png" alt="report">
+
 
 
 <!-- GETTING STARTED -->
