@@ -10,45 +10,41 @@
 
 {% block content %}
 
-<!-- STATISTICS -->
-{% if average_price %}
-<div class="container py-3 h-50">
-<div class="row d-flex justify-content-center align-items-center h-50">
-  <div class="col-md-5 col-lg-6 col-xl-4">
-    <div class="card" style="border-radius: 20px; border: 4px solid;">
-      <div class="card-body p-3">
-        <div class="d-flex">
-          <h6 class="flex-grow-1">Average price</h6>
-        </div>
-        <div class="d-flex flex-column text-center mt-2 mb-2">
-          <h6 class="display-4 mb-0 font-weight-bold"> {{average_price}}</h6>
-          <span class="small" style="color: #868B94">PLN</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-{% endif %}
-{% if average_price_per_meter %}
-<div class="container py-3 h-50">
-<div class="row d-flex justify-content-center align-items-center h-50">
-  <div class="col-md-5 col-lg-6 col-xl-4">
-    <div class="card" style="border-radius: 20px; border: 4px solid;">
-      <div class="card-body p-3">
-        <div class="d-flex">
-          <h6 class="flex-grow-1">Average price per meter</h6>
-        </div>
-        <div class="d-flex flex-column text-center mt-2 mb-2">
-          <h6 class="display-4 mb-0 font-weight-bold"> {{average_price_per_meter}}</h6>
-          <span class="small" style="color: #868B94">PLN</span>
+<div class="container py-3">
+  <div class="row">
+    {% if average_price %}
+    <div class="col-md-6">
+      <div class="card" style="border-radius: 20px; border: 4px solid;">
+        <div class="card-body p-3">
+          <div class="d-flex">
+            <h6 class="flex-grow-1">Average price</h6>
+          </div>
+          <div class="d-flex flex-column text-center mt-2 mb-2">
+            <h6 class="display-4 mb-0 font-weight-bold">{{average_price}}</h6>
+            <span class="small" style="color: #868B94">PLN</span>
+          </div>
         </div>
       </div>
     </div>
+    {% endif %}
+    {% if average_price_per_meter %}
+    <div class="col-md-6">
+      <div class="card" style="border-radius: 20px; border: 4px solid;">
+        <div class="card-body p-3">
+          <div class="d-flex">
+            <h6 class="flex-grow-1">Average price per meter</h6>
+          </div>
+          <div class="d-flex flex-column text-center mt-2 mb-2">
+            <h6 class="display-4 mb-0 font-weight-bold">{{average_price_per_meter}}</h6>
+            <span class="small" style="color: #868B94">PLN</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
   </div>
 </div>
-</div>
-{% endif %}
+
 
 <!-- COLLAPSE BUTTONS -->
 <div class="container">
@@ -298,7 +294,7 @@
 {% if data_list %}
 <div class="container table-responsive">
 <h2>All offers</h2>
-<table class="table">
+<table class="table table-hover">
     <thead>
         <tr>
             <th scope="col">Image</th>
