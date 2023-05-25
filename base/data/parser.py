@@ -1,6 +1,6 @@
+import datetime
 from dataclasses import dataclass
 from typing import List
-import datetime
 
 
 @dataclass
@@ -40,7 +40,7 @@ class Parser:
     def __init__(self, data):
         self.data = data
 
-    def parse_params(self, params):
+    def parse_params(self, params) -> List[ParamsData]:
         parsed_params = []
         for param in params:
             name = param.get("name", "")

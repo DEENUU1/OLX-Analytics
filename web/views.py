@@ -1,21 +1,28 @@
-from flask import Blueprint, render_template, session, redirect, url_for, flash, send_file
-from base.data import parser, localization
-from base.data import fetch_data
-from base.operation import operation, save_data
+from flask import (
+    Blueprint,
+    Response,
+    flash,
+    redirect,
+    render_template,
+    session,
+    url_for,
+)
+
+from base.data import fetch_data, localization, parser
+from base.operation import operation, report
+
 from .forms import (
-    SearchByCategories,
     SearchApartmentForm,
+    SearchByCategories,
     SearchHouseForm,
     validate_city_name,
 )
-from base.operation import report
-
 
 views = Blueprint("views", __name__)
 
 
 @views.route("/", methods=["GET", "POST"])
-def home_view():
+def home_view() -> Response | str:
     form = SearchByCategories()
     if form.validate_on_submit():
         category = form.category.data
@@ -24,9 +31,11 @@ def home_view():
             "price_min": form.price_min.data,
             "price_max": form.price_max.data,
         }
-        check_city = localization.Localization(validate_city_name(form.city.data)).return_localization_data()
+        check_city = localization.Localization(
+            validate_city_name(form.city.data)
+        ).return_localization_data()
         if check_city:
-            session['city_data'] = {'city': validate_city_name(form.city.data)}
+            session["city_data"] = {"city": validate_city_name(form.city.data)}
             if category == "1307":
                 return redirect(url_for("views.search_apartment_view"))
             elif category == "1309":
@@ -37,7 +46,7 @@ def home_view():
 
 
 @views.route("/search_apartment", methods=["GET", "POST"])
-def search_apartment_view():
+def search_apartment_view() -> Response | str:
     form = SearchApartmentForm()
 
     if form.validate_on_submit():
@@ -57,7 +66,7 @@ def search_apartment_view():
 
 
 @views.route("/search_house", methods=["GET", "POST"])
-def search_house_view():
+def search_house_view() -> Response | str:
     form = SearchHouseForm()
 
     if form.validate_on_submit():
@@ -76,7 +85,7 @@ def search_house_view():
     return render_template("search_house.html", form=form)
 
 
-def get_result_data(url):
+def get_result_data(url: str):
     x = parser.Parser(fetch_data.FetchData(url).fetch_data())
     d = x.data_parser()
     s = operation.return_newest_offers(d)
@@ -90,7 +99,7 @@ def get_result_data(url):
 
 
 @views.route("/results", methods=["GET", "POST"])
-def results_view():
+def results_view() -> Response | str:
     category_data = session.get("category_data")
     city_data = session.get("city_data")
 
@@ -111,7 +120,7 @@ def results_view():
             )
         elif category == "1309":
             house_data = session.get("house_data")
-            localization_data = localization.Localization(category_data["city"])
+            localization_data = localization.Localization(city)
             url = fetch_data.UrlBuilderHouse().build_url(
                 build_type=house_data["build_type"],
                 area_min=house_data["area_min"],
@@ -168,7 +177,7 @@ def get_report_data():
 
 
 @views.route("/report", methods=["GET", "POST"])
-def report_view():
+def report_view() -> Response | str:
     (
         report_apartment_data,
         report_house_data,

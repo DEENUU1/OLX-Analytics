@@ -1,8 +1,9 @@
 import os
 import smtplib
-from dotenv import load_dotenv
-from typing import Any
 from email.message import EmailMessage
+from typing import Any
+
+from dotenv import load_dotenv
 
 load_dotenv()
 

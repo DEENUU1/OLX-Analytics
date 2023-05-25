@@ -1,0 +1,18 @@
+repos:
+  - repo: local
+    hooks:
+      - &black
+        id: black
+        name: black
+        entry: black
+        language: system
+        types: [ python ]
+
+      - <<: *black
+        files: ^(web/)
+
+      - <<: *black
+        files: ^(base/)
+
+      - <<: *black
+        files: ^(test/)

@@ -1,6 +1,7 @@
-from base.data import parser
-from typing import List
 import datetime
+from typing import List
+
+from base.data import parser
 
 
 def return_newest_offers(data_list: List[parser.ParseData]) -> List[parser.ParseData]:
@@ -13,7 +14,7 @@ def return_newest_offers(data_list: List[parser.ParseData]) -> List[parser.Parse
     return newest_offers
 
 
-def get_price_value(data):
+def get_price_value(data) -> float | None:
     for param in data.params:
         if param.key == "price":
             price_str = param.value.replace(" ", "")
@@ -36,7 +37,9 @@ def get_param_value(data, key):
     return value
 
 
-def return_most_expensive_offer(data_list):
+def return_most_expensive_offer(
+    data_list: List[parser.ParseData],
+) -> parser.ParseData | None:
     max_price_object = None
     max_price = 0
 
@@ -51,7 +54,9 @@ def return_most_expensive_offer(data_list):
     return max_price_object
 
 
-def return_most_expensive_offer_per_meter(data_list):
+def return_most_expensive_offer_per_meter(
+    data_list: List[parser.ParseData],
+) -> parser.ParseData | None:
     max_price_per_meter = 0
     max_price_per_meter_obj = None
 
@@ -66,7 +71,9 @@ def return_most_expensive_offer_per_meter(data_list):
     return max_price_per_meter_obj
 
 
-def return_offer_largest_area_building(data_list):
+def return_offer_largest_area_building(
+    data_list: List[parser.ParseData],
+) -> parser.ParseData | None:
     max_area = 0
     max_area_object = None
 
@@ -83,7 +90,9 @@ def return_offer_largest_area_building(data_list):
     return max_area_object
 
 
-def return_offer_largest_area_plot(data_list):
+def return_offer_largest_area_plot(
+    data_list: List[parser.ParseData],
+) -> parser.ParseData | None:
     max_area = 0
     max_area_object = None
 
@@ -100,7 +109,7 @@ def return_offer_largest_area_plot(data_list):
     return max_area_object
 
 
-def return_average_price(data_list):
+def return_average_price(data_list: List[parser.ParseData]) -> float:
     total_price = 0
     count = 0
 
@@ -116,7 +125,7 @@ def return_average_price(data_list):
     return calculate_avg_price
 
 
-def return_average_price_per_meter(data_list):
+def return_average_price_per_meter(data_list: List[parser.ParseData]) -> float:
     total_price = 0
     count = 0
 
